@@ -23,7 +23,7 @@
 		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver" />
 		<property name="url" value="jdbc:mysql://localhost:3306/mydb1?autoReconnect=true&amp;useUnicode=true&amp;characterEncoding=UTF-8&amp;serverTimezone=GMT%2B8&amp;useSSL=false" />
 		<property name="username" value="root" />
-		<property name="password" value="mww963" />
+		<property name="password" value="root" />
 	</bean>
 	<!-- 1.2 托管SQLSessionFactory -->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
