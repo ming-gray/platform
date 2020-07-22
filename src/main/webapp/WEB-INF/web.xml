@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+  <display-name>platform</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  
+  <!-- 1. SpringMVC的前端控制器 -->
+	<servlet>
+		<servlet-name>springmvc</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:springmvc-servlet.xml</param-value>
+		</init-param>
+		<!-- 前端控制器随着容器启动而启动 -->
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>springmvc</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+	<!-- 2. Springmvc设置字符集的过滤器 -->
+	<!-- 防盗链过滤器 -->
+<!-- 	<filter> -->
+<!-- 	    <filter-name>linkFilter</filter-name> -->
+<!-- 	    <filter-class>com.platformmake.system.filter.IllegalLinkedFilter</filter-class> -->
+<!-- 	</filter> -->
+	
+<!-- 	<filter-mapping> -->
+<!-- 	    <filter-name>linkFilter</filter-name> -->
+<!-- 	    <url-pattern>/*</url-pattern> -->
+<!-- 	</filter-mapping> -->
+	
+	<!-- 指定字符集过滤器 -->
+	<filter>
+		<filter-name>characterEncodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<!-- 指定字符集 -->
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+		<!-- 指定强制使用字符集 这里设置为true jsp页面中设置的字符集将不起作用。若为false 。若jsp页面中有设置了字符集，就使用页面中的字符集，若没有还是设置这里的字符集 -->
+		<init-param>
+			<param-name>forceEncoding</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>characterEncodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<!-- 3. 加载Spring配置文件用的监听器和文件位置 -->
+	<!-- 指定 Spring 配置文件位置 -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:applicationContext.xml</param-value>
+	</context-param>
+  
+</web-app>
