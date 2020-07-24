@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <title>生产调度模块</title>
+
+    <!-- Bootstrap -->
+    <link href="style/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim 和 Respond.js 是为了让 IE8 支持 HTML5 元素和媒体查询（media queries）功能 -->
+    <!-- 警告：通过 file:// 协议（就是直接将 html 页面拖拽到浏览器中）访问页面时 Respond.js 不起作用 -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+    <h3>生产调度模块</h3>
+
+    <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+    <script src="script/jquery-3.3.1.min.js"></script>
+    <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+    <script src="script/bootstrap.min.js"></script>
+
+    <link href="style/workinfo.css" rel="stylesheet">
+    <script type="text/javascript" src="script/workinfo.js"></script>
+
+    <input type="hidden" name="pageNum" value="1" id="pageNum">
+    <input type="hidden" name="pageSize" value="3"> 
+
+    <div id="condition">
+        计划编号： <input type="text" name="planid">
+        工单号： <input type="text" name="workid">
+        产品： <input type="text" name="proname">
+        <button type="button" class="btn btn-primary" id="search">查询</button>
+        <button type="button" class="btn btn-primary" id="add">新建</button>
+    </div>
+    <div id="resultdiv">
+        <table class="table table-bordered" id="resulttable">
+            <tr>
+                <th>序号</th>
+                <th>计划编号</th>
+                <th>设备序列号</th>
+                <th>产品</th>
+                <th>工单状态</th>
+                <th>工单数量</th>
+                <th>创建时间</th>
+                <th>修改时间</th>
+                <th>开始日期</th>
+                <th>结束日期</th>
+                <th>操作</th>
+            </tr>
+        </table>
+    </div>
+    <div id="pagectrl">
+        共<span id="total"></span>条&nbsp;&nbsp;&nbsp;
+        共<span id="pages"></span>页&nbsp;&nbsp;&nbsp;
+        第<span id="curpage"></span>页
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <a href="javascript:void(0)" id="prePage">上一页</a><span id="prePageSpan">上一页</span>
+        <input type="number" id="gopage" min="1"><a href="javascript:void(0)" id="goBtn">Go</a>
+        <a href="javascript:void(0)" id="nextPage">下一页</a><span id="nextPageSpan">下一页</span>
+    </div>
+
+
+
+</body>
+</html>

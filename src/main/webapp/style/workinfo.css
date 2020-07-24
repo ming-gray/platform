@@ -1,0 +1,13 @@
+#pagectrl {
+    font-size: 0.8em;
+    text-align: center;
+    display: none;
+}
+
+#resultdiv {
+    display: none;
+}
+
+#gopage {
+    width: 30px;
+}
