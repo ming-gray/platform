@@ -17,6 +17,9 @@ import com.platformmake.model.entity.Connect;
 import com.platformmake.model.entity.ConnectExample;
 import com.platformmake.model.entity.Equipinfo;
 import com.platformmake.model.entity.Planinfo;
+import com.platformmake.model.entity.PlaninfoExample;
+import com.platformmake.model.entity.Productinfo;
+import com.platformmake.model.entity.ProductinfoExample;
 import com.platformmake.model.entity.Workinfo;
 import com.platformmake.model.entity.WorkinfoExample;
 
@@ -44,7 +47,7 @@ public class WorkinfoService {
 	private ProductinfoMapper prom;
 	
 	/**
-	  *  添加生产调度信息
+	  *  添加生产调度信息，新建工单
 	 * @param wokinfo
 	 * @return
 	 */
@@ -68,7 +71,7 @@ public class WorkinfoService {
 	public Workinfo	startWorkinfo(int workid) {
 		Workinfo workinfo = wm.selectByPrimaryKey(workid);
 		if(workinfo == null) {
-			System.out.println("该工单不存在，请重试");
+			System.out.println("该工单不存在");
 			return null;
 		}
 	    if (workinfo.getWorkstate() == 10) {
@@ -76,9 +79,9 @@ public class WorkinfoService {
 			workinfo.setWorkstate(20);
 			wm.updateByPrimaryKeySelective(workinfo);
 			
-			// 启动设备
+			// 启动设备,设备状态10为启动，可能需要改
 			Equipinfo eqinfo = em.selectByPrimaryKey(workinfo.getEqid());
-			eqinfo.setEqstate(20);
+			eqinfo.setEqstate(10);
 			em.updateByPrimaryKeySelective(eqinfo);
 			
 			return workinfo;
@@ -220,15 +223,48 @@ public class WorkinfoService {
 	 * @param proid
 	 * @return
 	 */
-//	public Workinfo	setEquiWorkinfo(int proid) {
-//		ConnectExample example = new ConnectExample();
-//		com.platformmake.model.entity.ConnectExample.Criteria cc = example.createCriteria();
-//		cc.andProidEqualTo(proid);
+	public Workinfo	setEquiWorkinfo(Workinfo workinfo) {
+		ConnectExample example = new ConnectExample();
+		com.platformmake.model.entity.ConnectExample.Criteria cc = example.createCriteria();
+		cc.andProidEqualTo(workinfo.getProid());
+		
+		List<Connect> list = cm.selectByExample(example);
+		//获取与产品对应的设备
+		if(list.size() == 0) {
+			System.out.println("找不到对应设备");
+			return null;
+		}
+		for(Connect c: list) {
+			Equipinfo eq = em.selectByPrimaryKey(c.getEqid());
+			// 判断设备状态
+			if(eq.getEqstate() == 20) {
+				// 还要判断产能
+				// ???
+				workinfo.setEqid(eq.getEqid());
+				wm.updateByPrimaryKeySelective(workinfo);
+				break;
+			}
+			else {
+				System.out.println("设备已启用或发生故障");
+				return null;
+			}
+		}
+		return workinfo;
+	}
+	
+	/**
+	  *  获取所有生产计划
+	 * 
+	 * @return
+	 */
+	public List<Planinfo> searchAllPlans(){
+		return pm.selectByExample(null);
+		
+	}
+	
+//	public List<Productinfo> searchProByPlan(int planid){
+//		Planinfo planinfo = pm.selectByPrimaryKey(planid);
+//		prom.selectByPrimaryKey(planinfo.getProid()).getProname();
 //		
-//		List<Connect> list = cm.selectByExample(example);
-//		//获取与产品对应的设备
-//		if(list)
 //	}
-	
-	
 }

@@ -67,4 +67,14 @@ public class TestWorkinfoService {
 		List<Workinfo> list = service.selectByPlanid(1);
 		System.out.println(list);
 	}
+	
+	@Test
+	public void testSearchAllPlans() {
+		System.out.println(service.searchAllPlans());
+	}
+	
+	@Test
+	public void testSetEquiWorkinfo() {
+		System.out.println(service.setEquiWorkinfo(new Workinfo(0, null, null, null, null, 1, 0, 1, null, null)));
+	}
 }

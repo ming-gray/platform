@@ -1,5 +1,5 @@
 #pagectrl {
-    font-size: 0.8em;
+    font-size: 1em;
     text-align: center;
     display: none;
 }
@@ -9,5 +9,9 @@
 }
 
 #gopage {
-    width: 30px;
+    width: 40px;
+}
+
+#searchBtn {
+    display: none;
 }

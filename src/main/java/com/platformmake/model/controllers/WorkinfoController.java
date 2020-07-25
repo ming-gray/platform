@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.pagehelper.PageInfo;
+import com.platformmake.model.entity.Planinfo;
 import com.platformmake.model.entity.Workinfo;
 import com.platformmake.model.services.WorkinfoService;
 
@@ -91,6 +92,16 @@ public class WorkinfoController {
 	@RequestMapping("/modwork")
 	public boolean doUpdateWorkinfo(Workinfo workinfo) {
 		return service.updateWorkinfo(workinfo);
+	}
+	
+	/**
+	  *  获取所有生产计划
+	 * 
+	 * @return
+	 */
+	@RequestMapping("/searchallplans")
+	public List<Planinfo> doSearchAllPlans(){
+		return service.searchAllPlans();
 	}
 	
 	/**

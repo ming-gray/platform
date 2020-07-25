@@ -1,5 +1,28 @@
 $(function () {
-    $("#search").click(function () {
+
+
+    $("#selplan").change(function () {
+        $("#selpro").attr("disabled", false);
+        $('#selpro').selectpicker('refresh');
+
+    });
+
+    $("#selpro").change(function () {
+
+        $("#seleq").attr("disabled", false);
+        $('#seleq').selectpicker('refresh');
+    });
+
+});
+
+
+$(function () {
+    $("#searchBtnShow").click(function () {
+        $("#pageNum").val(1);
+        $("#searchBtn").click();
+    });
+
+    $("#searchBtn").click(function () {
         $.post("/platform/searchall", $("[name]").serialize(), function (data) {
             if (data && data.size > 0) {
                 $("#total").html(data.total);
@@ -20,6 +43,44 @@ $(function () {
                     $("<td></td>").html(workinfo.updtime).appendTo(oTr);
                     $("<td></td>").html(workinfo.worksttime).appendTo(oTr);
                     $("<td></td>").html(workinfo.workentime).appendTo(oTr);
+
+
+                    var oTd = $("<td></td>").appendTo(oTr);
+                    if (workinfo.workstate == 10) {
+                        $("<input type='button' class='btn btn-default' value='删除'>").click(function () {
+                            var isOK = confirm("您确认要删除吗？");
+                            if (isOK) {
+                                var workid = $(this).parent().parent().find("td:eq(0)").html();
+
+                                $.post("/platform/delwork", "workid=" + workid, function (data) {
+                                    if (data == "true") {
+                                        alert("删除成功");
+                                        $("#searchBtn").click();
+                                    } else {
+                                        alert("删除失败，请重试");
+                                    }
+                                }, "text");
+                            }
+
+                        }).appendTo(oTd);
+
+
+                        $("<input type='button' class='btn btn-default' value='启动'>").click(function () {
+                            var workid = $(this).parent().parent().find("td:eq(0)").html();
+
+                            $.post("/platform/start", "workid=" + workid, function (data) {
+                                if (data) {
+                                    alert("启动成功");
+                                    $("#searchBtn").click();
+                                } else {
+                                    alert("启动失败，请重试");
+                                }
+                            }, "json");
+
+                        }).appendTo(oTd);
+                    }
+
+
 
                     oTr.appendTo("#resulttable");
                 }
@@ -49,4 +110,35 @@ $(function () {
         }, "json");
     });
 
+});
+
+
+
+$(function () {
+    $("#prePage").click(function () {
+        var pageNum = $("#pageNum").val();
+        $("#pageNum").val(pageNum - 1);
+        $("#searchBtn").click();
+    });
+
+    $("#nextPage").click(function () {
+        var pageNum = $("#pageNum").val();
+        $("#pageNum").val(pageNum * 1 + 1);
+        $("#searchBtn").click();
+    });
+
+    $("#goBtn").click(function () {
+        var gopage = $("#gopage").val() * 1;
+        if (gopage < 1) {
+            gopage = 1;
+        }
+
+        var pages = $("#pages").html();
+        if (gopage > pages * 1) {
+            gopage = pages;
+        }
+
+        $("#pageNum").val(gopage);
+        $("#searchBtn").click();
+    });
 });

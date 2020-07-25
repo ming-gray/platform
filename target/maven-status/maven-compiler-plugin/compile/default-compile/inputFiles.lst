@@ -1,4 +1,5 @@
 C:\Users\ming\Documents\workspace-sts-3.9.13.RELEASE\platform\src\main\java\com\platformmake\model\dao\ProductinfoMapper.java
+C:\Users\ming\Documents\workspace-sts-3.9.13.RELEASE\platform\src\main\java\com\platformmake\model\dao\OrderinfoMapper.java
 C:\Users\ming\Documents\workspace-sts-3.9.13.RELEASE\platform\src\main\java\com\platformmake\model\services\WorkinfoService.java
 C:\Users\ming\Documents\workspace-sts-3.9.13.RELEASE\platform\src\main\java\com\platformmake\model\controllers\WorkinfoController.java
 C:\Users\ming\Documents\workspace-sts-3.9.13.RELEASE\platform\src\main\java\com\platformmake\model\dao\WorkinfoMapper.java
@@ -6,6 +7,7 @@ C:\Users\ming\Documents\workspace-sts-3.9.13.RELEASE\platform\src\main\java\com\
 C:\Users\ming\Documents\workspace-sts-3.9.13.RELEASE\platform\src\main\java\com\platformmake\model\entity\EquipinfoExample.java
 C:\Users\ming\Documents\workspace-sts-3.9.13.RELEASE\platform\src\main\java\com\platformmake\model\entity\Productinfo.java
 C:\Users\ming\Documents\workspace-sts-3.9.13.RELEASE\platform\src\main\java\com\platformmake\model\entity\WorkinfoExample.java
+C:\Users\ming\Documents\workspace-sts-3.9.13.RELEASE\platform\src\main\java\com\platformmake\model\entity\Orderinfo.java
 C:\Users\ming\Documents\workspace-sts-3.9.13.RELEASE\platform\src\main\java\com\platformmake\model\entity\ProductinfoExample.java
 C:\Users\ming\Documents\workspace-sts-3.9.13.RELEASE\platform\src\main\java\com\platformmake\model\dao\PlaninfoMapper.java
 C:\Users\ming\Documents\workspace-sts-3.9.13.RELEASE\platform\src\main\java\com\platformmake\model\entity\Equipinfo.java
@@ -15,3 +17,4 @@ C:\Users\ming\Documents\workspace-sts-3.9.13.RELEASE\platform\src\main\java\com\
 C:\Users\ming\Documents\workspace-sts-3.9.13.RELEASE\platform\src\main\java\com\platformmake\model\entity\Planinfo.java
 C:\Users\ming\Documents\workspace-sts-3.9.13.RELEASE\platform\src\main\java\com\platformmake\model\dao\EquipinfoMapper.java
 C:\Users\ming\Documents\workspace-sts-3.9.13.RELEASE\platform\src\main\java\com\platformmake\model\entity\Connect.java
+C:\Users\ming\Documents\workspace-sts-3.9.13.RELEASE\platform\src\main\java\com\platformmake\model\entity\OrderinfoExample.java

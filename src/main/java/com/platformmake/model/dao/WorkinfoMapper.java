@@ -93,4 +93,12 @@ public interface WorkinfoMapper {
      * @mbg.generated Thu Jul 23 09:40:58 CST 2020
      */
     int updateByPrimaryKey(Workinfo record);
+    
+    int hasRelatedSchedule(int planid);
+    
+    int hasRelatedUnfinishedSchedule(int planid);
+
+    int hasFinishedNum(int planid);
+
+    int getProduceNum(int planid);
 }

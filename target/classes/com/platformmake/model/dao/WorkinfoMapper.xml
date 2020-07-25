@@ -13,6 +13,29 @@
     <result column="worksttime" jdbcType="DATE" property="worksttime" />
     <result column="workentime" jdbcType="DATE" property="workentime" />
   </resultMap>
+<!--   <resultMap id="WPResultMap" type="com.platformmake.model.entity.Workinfo"> -->
+<!--         <id column="workid" jdbcType="INTEGER" property="workid" /> -->
+<!-- 	    <result column="cretime" jdbcType="TIMESTAMP" property="cretime" /> -->
+<!-- 	    <result column="updtime" jdbcType="TIMESTAMP" property="updtime" /> -->
+<!-- 	    <result column="workcount" jdbcType="INTEGER" property="workcount" /> -->
+<!-- 	    <result column="workstate" jdbcType="INTEGER" property="workstate" /> -->
+<!-- 	    <result column="planid" jdbcType="INTEGER" property="planid" /> -->
+<!-- 	    <result column="eqid" jdbcType="INTEGER" property="eqid" /> -->
+<!-- 	    <result column="proid" jdbcType="INTEGER" property="proid" /> -->
+<!-- 	    <result column="worksttime" jdbcType="DATE" property="worksttime" /> -->
+<!-- 	    <result column="workentime" jdbcType="DATE" property="workentime" /> -->
+<!--         <association property="planinfo" javaType="com.platformmake.model.entity.Planinfo"> -->
+<!--             <id column="planid" jdbcType="INTEGER" property="planid" /> -->
+<!-- 		    <result column="ordid" jdbcType="INTEGER" property="ordid" /> -->
+<!-- 		    <result column="proid" jdbcType="INTEGER" property="proid" /> -->
+<!-- 		    <result column="plancount" jdbcType="INTEGER" property="plancount" /> -->
+<!-- 		    <result column="ddl" jdbcType="DATE" property="ddl" /> -->
+<!-- 		    <result column="plansttime" jdbcType="DATE" property="plansttime" /> -->
+<!-- 		    <result column="planentime" jdbcType="DATE" property="planentime" /> -->
+<!-- 		    <result column="planstate" jdbcType="INTEGER" property="planstate" /> -->
+<!--         </association> -->
+<!--     </resultMap> -->
+  
   <sql id="Example_Where_Clause">
     <!--
       WARNING - @mbg.generated
@@ -358,4 +381,28 @@
       workentime = #{workentime,jdbcType=DATE}
     where workid = #{workid,jdbcType=INTEGER}
   </update>
+  <select id="hasRelatedSchedule" resultType="_int">
+        select count(*)
+        from workinfo
+        where planid = #{planid}
+  </select>
+  <select id="hasRelatedUnfinishedWorkinfoNum" resultType="_int">
+        select count(*)
+        from workinfo
+        where planid = #{planid}
+          and workstate != 30
+    </select>
+    <select id="hasFinishedNum" resultType="_int">
+        select IFNULL(sum(workcount), 0)
+        from workinfo
+        where planid = #{planid}
+          and workstate = 30
+    </select>
+    <select id="getProduceNum" resultType="_int">
+        select IFNULL(sum(workcount), 0)
+        from workinfo
+        where planid = #{planid}
+          and workstate = 20
+    </select>
+  
 </mapper>

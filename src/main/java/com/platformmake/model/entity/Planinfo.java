@@ -266,4 +266,31 @@ public class Planinfo {
     public void setPlanstate(Integer planstate) {
         this.planstate = planstate;
     }
+
+	public Planinfo() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Planinfo(Integer planid, Integer ordid, Integer proid, Integer plancount, Date ddl, Date plansttime,
+			Date planentime, Integer planstate) {
+		super();
+		this.planid = planid;
+		this.ordid = ordid;
+		this.proid = proid;
+		this.plancount = plancount;
+		this.ddl = ddl;
+		this.plansttime = plansttime;
+		this.planentime = planentime;
+		this.planstate = planstate;
+	}
+
+	@Override
+	public String toString() {
+		return "Planinfo [planid=" + planid + ", ordid=" + ordid + ", proid=" + proid + ", plancount=" + plancount
+				+ ", ddl=" + ddl + ", plansttime=" + plansttime + ", planentime=" + planentime + ", planstate="
+				+ planstate + "]";
+	}
+    
+    
 }
