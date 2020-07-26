@@ -1,5 +1,24 @@
 #add {
-    
     text-align: center;
-    
+}
+
+#seleq {
+    font-size: 1em;
+    width: 220px;
+    height: 35px;
+}
+
+#workcount {
+    width: 220px;
+    height: 35px;
+}
+
+#worksttime {
+    width: 220px;
+    height: 35px;
+}
+
+#workentime {
+    width: 220px;
+    height: 35px;
 }

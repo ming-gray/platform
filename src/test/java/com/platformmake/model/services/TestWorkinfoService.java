@@ -33,7 +33,7 @@ public class TestWorkinfoService {
 	
 	@Test
 	public void testStartWorkinfo() {
-		Workinfo w = service.startWorkinfo(7);
+		Workinfo w = service.startWorkinfo(8);
 		System.out.println(w);
 	}
 	

@@ -32,9 +32,8 @@ $(function () {
                     
                     $("<td></td>").html(workinfo.workcount).appendTo(oTr);
                     
-                    $("<td></td>").html(new Date().format("yyyy-MM-dd hh:mm:ss")).appendTo(oTr);
-                    
-                    $("<td></td>").html(new Date().format("yyyy-MM-dd hh:mm:ss")).appendTo(oTr);
+                    $("<td></td>").html(workinfo.cretime).appendTo(oTr);                  
+                    $("<td></td>").html(workinfo.updtime).appendTo(oTr);
                     $("<td></td>").html(workinfo.worksttime).appendTo(oTr);
                     $("<td></td>").html(workinfo.workentime).appendTo(oTr);
  
@@ -59,7 +58,7 @@ $(function () {
                         }).appendTo(oTd);
 
 
-                        $("<input type='button' class='btn btn-success' value='启动'>").click(function () {
+                        $("<input type='button' class='btn btn-success' value=' 启动'>").click(function () {
                             var workid = $(this).parent().parent().find("td:eq(0)").html();
                             var updtime = $(this).parent().parent().find("td:eq(7)").html();
 
@@ -137,4 +136,14 @@ $(function () {
         $("#pageNum").val(gopage);
         $("#searchBtn").click();
     });
+    
+    /*window.onload = function() {
+    var from = sessionStorage.getItem("from");
+    if(from == 'pageA') {
+        //要触发的点击事件  $('#xxx').click()
+        $("#searchBtn").click();
+        sessionStorage.setItem("from",""); //销毁 from 防止在b页面刷新 依然触发$('#xxx').click()
+    }
+}*/
+    
 });

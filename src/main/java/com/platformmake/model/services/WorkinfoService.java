@@ -96,7 +96,8 @@ public class WorkinfoService {
 			eqinfo.setEqstate(10);
 			em.updateByPrimaryKeySelective(eqinfo);
 			
-			// 设置更新时间			
+			// 设置开始日期和更新时间	
+			workinfo.setWorksttime(new Timestamp(new Date().getTime()));
 			workinfo.setUpdtime(new Timestamp(new Date().getTime()));
 			wm.updateByPrimaryKey(workinfo);
 			
@@ -182,8 +183,13 @@ public class WorkinfoService {
 		
 		// 每一条已启动计划中必须有一条以上工单记录
 		// 获取计划状态
+		WorkinfoExample example = new WorkinfoExample();
+		Criteria cc = example.createCriteria();
+		cc.andPlanidEqualTo(workinfo.getPlanid());
+
+		List<Workinfo> list = wm.selectByExample(example);
 		if(pm.selectByPrimaryKey(workinfo.getPlanid()).getPlanstate() == 20) {
-			if(wm.hasRelatedSchedule(workinfo.getPlanid()) < 2) {
+			if(list.size() < 2) {
 				// 也可以是删除成功，但是把已启动的计划更新为未启动？
 				System.out.println("工单记录不足，删除失败");
 				return false;
@@ -261,10 +267,13 @@ public class WorkinfoService {
 			// 判断设备状态为未启用
 			if(eq.getEqstate() == 20) {
 				// 还要判断产能：日产能×间隔天数>工单数量
-				long daysbtween = workinfo.getWorkentime().getTime() - workinfo.getWorksttime().getTime();
-				if(daysbtween * c.getYield() > workinfo.getWorkcount()) {
+				
+				Planinfo planinfo = pm.selectByPrimaryKey(workinfo.getPlanid());
+				long daysbtween = planinfo.getDdl().getTime() - new Date().getTime();
+				if(daysbtween * c.getYield() > planinfo.getPlancount()) {
 					workinfo.setEqid(eq.getEqid());
 					wm.updateByPrimaryKeySelective(workinfo);
+					System.out.println("设备更新了" + eq.getEqid());
 					break;
 				}
 			}
@@ -276,6 +285,7 @@ public class WorkinfoService {
 		// 设置更新时间
 		workinfo.setUpdtime(new Timestamp(new Date().getTime()));
 		wm.updateByPrimaryKeySelective(workinfo);
+		System.out.println(workinfo);
 		return workinfo;
 	}
 	
