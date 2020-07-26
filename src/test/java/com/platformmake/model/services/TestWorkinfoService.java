@@ -1,5 +1,7 @@
 package com.platformmake.model.services;
 
+
+import java.util.Date;
 import java.util.List;
 
 import org.junit.Test;
@@ -25,13 +27,13 @@ public class TestWorkinfoService {
 	
 	@Test
 	public void testAddWorkinfo() {
-		boolean b = service.addWorkinfo(new Workinfo(0, null, null, null, 10, 1, 1, 1, null, null));
+		boolean b = service.addWorkinfo(new Workinfo(0, null, null, null, 10, 1, 1, 1, new Date(2020-12-12), null));
 		System.out.println(b);
 	}
 	
 	@Test
 	public void testStartWorkinfo() {
-		Workinfo w = service.startWorkinfo(3);
+		Workinfo w = service.startWorkinfo(7);
 		System.out.println(w);
 	}
 	
@@ -43,13 +45,13 @@ public class TestWorkinfoService {
 	
 	@Test
 	public void testDeleteById() {
-		boolean b = service.deleteById(3);
+		boolean b = service.deleteById(14);
 		System.out.println(b);
 	}
 	
 	@Test
 	public void testListWorkinfo() {
-		PageInfo<Workinfo> list = service.listWorkinfo(new Workinfo(2, null, null, null, null, null, null, null, null, null), 1, 3);
+		PageInfo<Workinfo> list = service.listWorkinfo(new Workinfo(3, null, null, null, null, null, null, null, null, null), 1, 3);
 		System.out.println(list);
 		for(Workinfo workinfo: list.getList()) {
 			System.out.println(workinfo);
@@ -58,7 +60,7 @@ public class TestWorkinfoService {
 	
 	@Test
 	public void testUpdateWorkinfo() {
-		boolean b = service.updateWorkinfo(new Workinfo(2, null, null, null, 20, null, null, null, null, null));
+		boolean b = service.updateWorkinfo(new Workinfo(3, null, null, null, 20, null, null, null, null, null));
 		System.out.println(b);
 	}
 	
@@ -75,6 +77,6 @@ public class TestWorkinfoService {
 	
 	@Test
 	public void testSetEquiWorkinfo() {
-		System.out.println(service.setEquiWorkinfo(new Workinfo(0, null, null, null, null, 1, 0, 1, null, null)));
+		System.out.println(service.setEquiWorkinfo(new Workinfo(0, null, null, 150, 10, 1, 1, 1, new Date(2020-07-25), new Date(2020-07-27))));
 	}
 }

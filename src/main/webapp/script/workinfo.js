@@ -1,19 +1,4 @@
-$(function () {
 
-
-    $("#selplan").change(function () {
-        $("#selpro").attr("disabled", false);
-        $('#selpro').selectpicker('refresh');
-
-    });
-
-    $("#selpro").change(function () {
-
-        $("#seleq").attr("disabled", false);
-        $('#seleq').selectpicker('refresh');
-    });
-
-});
 
 
 $(function () {
@@ -37,17 +22,26 @@ $(function () {
                     $("<td></td>").html(workinfo.planid).appendTo(oTr);
                     $("<td></td>").html(workinfo.eqid).appendTo(oTr);
                     $("<td></td>").html(workinfo.proid).appendTo(oTr);
-                    $("<td></td>").html(workinfo.workstate).appendTo(oTr);
+                    if(workinfo.workstate == 10){
+                        $("<td></td>").html("未启动").appendTo(oTr);
+                    }else if(workinfo.workstate == 20){
+                        $("<td></td>").html("生产中").appendTo(oTr);
+                    }else{
+                        $("<td></td>").html("已完成").appendTo(oTr);
+                    }
+                    
                     $("<td></td>").html(workinfo.workcount).appendTo(oTr);
-                    $("<td></td>").html(workinfo.cretime).appendTo(oTr);
-                    $("<td></td>").html(workinfo.updtime).appendTo(oTr);
+                    
+                    $("<td></td>").html(new Date().format("yyyy-MM-dd hh:mm:ss")).appendTo(oTr);
+                    
+                    $("<td></td>").html(new Date().format("yyyy-MM-dd hh:mm:ss")).appendTo(oTr);
                     $("<td></td>").html(workinfo.worksttime).appendTo(oTr);
                     $("<td></td>").html(workinfo.workentime).appendTo(oTr);
-
+ 
 
                     var oTd = $("<td></td>").appendTo(oTr);
                     if (workinfo.workstate == 10) {
-                        $("<input type='button' class='btn btn-default' value='删除'>").click(function () {
+                        $("<input type='button' class='btn btn-danger' value='删除'>").click(function () {
                             var isOK = confirm("您确认要删除吗？");
                             if (isOK) {
                                 var workid = $(this).parent().parent().find("td:eq(0)").html();
@@ -65,12 +59,14 @@ $(function () {
                         }).appendTo(oTd);
 
 
-                        $("<input type='button' class='btn btn-default' value='启动'>").click(function () {
+                        $("<input type='button' class='btn btn-success' value='启动'>").click(function () {
                             var workid = $(this).parent().parent().find("td:eq(0)").html();
+                            var updtime = $(this).parent().parent().find("td:eq(7)").html();
 
                             $.post("/platform/start", "workid=" + workid, function (data) {
                                 if (data) {
                                     alert("启动成功");
+                                    
                                     $("#searchBtn").click();
                                 } else {
                                     alert("启动失败，请重试");

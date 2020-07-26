@@ -1,5 +1,8 @@
 package com.platformmake.model.services;
 
+
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,7 +60,16 @@ public class WorkinfoService {
 		
 		// 对已启动的生产计划新建工单
 		if(planinfo.getPlanstate() == 20) {
+			// 生成生产跟踪记录？
 			wm.insert(workinfo);
+			
+			// 设置创建时间
+			workinfo.setCretime(new Timestamp(new Date().getTime()));
+			
+			// 默认第一次修改时间为创建时间
+			workinfo.setUpdtime(new Timestamp(new Date().getTime()));
+			wm.updateByPrimaryKeySelective(workinfo);
+			
 			return true;
 		}
 		return false;
@@ -83,6 +95,10 @@ public class WorkinfoService {
 			Equipinfo eqinfo = em.selectByPrimaryKey(workinfo.getEqid());
 			eqinfo.setEqstate(10);
 			em.updateByPrimaryKeySelective(eqinfo);
+			
+			// 设置更新时间			
+			workinfo.setUpdtime(new Timestamp(new Date().getTime()));
+			wm.updateByPrimaryKey(workinfo);
 			
 			return workinfo;
 		}else {
@@ -152,7 +168,7 @@ public class WorkinfoService {
 	}
 	
 	/**
-	  *   删除未启动工单
+	  *   删除未启动或已完成工单
 	 * @param workid
 	 * @return
 	 */
@@ -165,25 +181,25 @@ public class WorkinfoService {
 		}
 		
 		// 每一条已启动计划中必须有一条以上工单记录
-		WorkinfoExample example = new WorkinfoExample();
-		Criteria cc = example.createCriteria();
-		cc.andPlanidEqualTo(workinfo.getPlanid());
-		//获取计划状态
+		// 获取计划状态
+		if(pm.selectByPrimaryKey(workinfo.getPlanid()).getPlanstate() == 20) {
+			if(wm.hasRelatedSchedule(workinfo.getPlanid()) < 2) {
+				// 也可以是删除成功，但是把已启动的计划更新为未启动？
+				System.out.println("工单记录不足，删除失败");
+				return false;
+			}
+			else if(workinfo.getWorkstate() != 20) {
+				wm.deleteByPrimaryKey(workid);
+				return true;
+			}
+			else {
+				System.out.println("已启动工单不可删除");
+				return false;
+			}
+		}
 		
-		
-		List<Workinfo> list = wm.selectByExample(example);
-		if(list.size() < 2) {
-			System.out.println("工单记录不足，删除失败");
-			return false;
-		}
-		else if(workinfo.getWorkstate() == 10) {
-			wm.deleteByPrimaryKey(workid);
-			return true;
-		}
-		else {
-			System.out.println("已启动工单不可删除");
-			return false;
-		}
+		System.out.println("工单对应计划未启动");
+		return false;
 	}
 	
 	/**
@@ -199,6 +215,11 @@ public class WorkinfoService {
 		}
 		else {
 			wm.updateByPrimaryKeySelective(workinfo);
+			
+			// 设置更新时间			
+			workinfo.setUpdtime(new Timestamp(new Date().getTime()));
+			wm.updateByPrimaryKey(workinfo);
+			
 			return true;
 		}
 		
@@ -224,6 +245,7 @@ public class WorkinfoService {
 	 * @return
 	 */
 	public Workinfo	setEquiWorkinfo(Workinfo workinfo) {
+		
 		ConnectExample example = new ConnectExample();
 		com.platformmake.model.entity.ConnectExample.Criteria cc = example.createCriteria();
 		cc.andProidEqualTo(workinfo.getProid());
@@ -236,19 +258,24 @@ public class WorkinfoService {
 		}
 		for(Connect c: list) {
 			Equipinfo eq = em.selectByPrimaryKey(c.getEqid());
-			// 判断设备状态
+			// 判断设备状态为未启用
 			if(eq.getEqstate() == 20) {
-				// 还要判断产能
-				// ???
-				workinfo.setEqid(eq.getEqid());
-				wm.updateByPrimaryKeySelective(workinfo);
-				break;
+				// 还要判断产能：日产能×间隔天数>工单数量
+				long daysbtween = workinfo.getWorkentime().getTime() - workinfo.getWorksttime().getTime();
+				if(daysbtween * c.getYield() > workinfo.getWorkcount()) {
+					workinfo.setEqid(eq.getEqid());
+					wm.updateByPrimaryKeySelective(workinfo);
+					break;
+				}
 			}
 			else {
 				System.out.println("设备已启用或发生故障");
 				return null;
 			}
 		}
+		// 设置更新时间
+		workinfo.setUpdtime(new Timestamp(new Date().getTime()));
+		wm.updateByPrimaryKeySelective(workinfo);
 		return workinfo;
 	}
 	

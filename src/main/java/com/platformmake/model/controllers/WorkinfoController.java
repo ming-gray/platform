@@ -109,8 +109,8 @@ public class WorkinfoController {
 	 * @param proid
 	 * @return
 	 */
-//	@RequestMapping("/seteq")
-//	public Workinfo	doSetEquiWorkinfo(int proid) {
-//		return service.setEquiWorkinfo(proid);
-//	}
+	@RequestMapping("/seteq")
+	public Workinfo	doSetEquiWorkinfo(Workinfo workinfo) {
+		return service.setEquiWorkinfo(workinfo);
+	}
 }

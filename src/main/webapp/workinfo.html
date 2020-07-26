@@ -27,7 +27,7 @@
     <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
     <script src="script/bootstrap.min.js"></script>
     <script src="script/bootstrap-select.js"></script>
-
+    <script type="text/javascript" src="script/koala-1.1.1.js"></script>
     <link href="style/workinfo.css" rel="stylesheet">
     <script type="text/javascript" src="script/workinfo.js"></script>
 
@@ -40,9 +40,10 @@
         工单号： <input type="text" name="workid">
         产品： <input type="text" name="proname">
 
-        <button type="button" class="btn btn-primary" id="searchBtnShow">查询</button>
+        <button type="button" class="btn btn-primary" id="searchBtnShow"> <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+            查询</button>
         <button type="button" class="btn btn-primary" id="searchBtn">隐藏查询</button>
-
+        <a class="btn btn-default" href="addworkinfo.html" role="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>新建</a>
 
     </div>
     <div id="resultdiv">
@@ -72,66 +73,7 @@
         <a href="javascript:void(0)" id="nextPage">下一页</a><span id="nextPageSpan">下一页</span>
     </div>
 
-    <div class="container">
 
-        <!-- 按钮：用于打开模态框 -->
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-            新建
-        </button>
-
-        <!-- 模态框 -->
-        <div class="modal fade" id="myModal">
-            <div class="modal-dialog">
-                <div class="modal-content">
-
-                    <!-- 模态框头部 -->
-                    <div class="modal-header">
-                        <h4 class="modal-title">新建工单</h4>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    </div>
-
-                    <!-- 模态框主体 -->
-                    <div class="modal-body">
-                        计划编号 : <select name="planid" id="selplan" class="selectpicker show-tick" title="请选择计划" data-live-search=“true” data-size="5">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                        </select><br><br>
-                        产品名称 : <select name="proname" id="selpro" class="selectpicker show-tick" title="请选择产品" data-live-search=“true” data-size="5" disabled>
-                            <option>苹果</option>
-                            <option>西瓜</option>
-                            <option>脐橙</option>
-                            <option>猕猴桃</option>
-                            <option>柿子</option>
-                        </select><br><br>
-                        设备编号 : <select name="eqid" id="seleq" class="selectpicker show-tick" title="请选择设备" data-live-search=“true” data-size="5" disabled>
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                        </select><br><br>
-                        计划生产数量: <input type="text"><br><br>
-                        已生产数量: <input type="text"><br><br>
-                        正在生产数量: <input type="text"><br><br>
-                        工单数量 : <input type="number" min="1">
-
-                    </div>
-
-
-                    <!-- 模态框底部 -->
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary">保存</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-    </div>
 
 </body>
 
