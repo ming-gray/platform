@@ -1,0 +1,104 @@
+#trackdiv{
+    margin-top: 20px;
+    display: none;
+}
+#tracktable{
+    margin: 0px auto;
+    border: 1px black solid;
+    border-collapse: collapse;
+}
+#tracktable th,#tracktable td{
+    border: 1px black solid;
+    padding: 10px;
+}
+#tracktable th{
+    background-color:brown;
+    color:aliceblue;
+}
+#trackcondition{
+    display: none;
+}
+#trackpagectrl{
+    font-size:  0.8cm;
+    text-align: center;
+    display:   none;
+}
+#trackgopage{
+    width: 30px;
+}
+#tracknextPageSpan,#trackprePageSpan{
+    display: none;
+}
+
+#adddaywork{
+    margin-top: 20px;
+    display: none;
+}
+
+
+
+
+#dayworkdiv{
+    margin-top: 20px;
+    display: none;
+}
+#dayworktable{
+    margin: 0px auto;
+    border: 1px black solid;
+    border-collapse: collapse;
+}
+#dayworktable th,#dayworktable td{
+    border: 1px black solid;
+    padding: 10px;
+}
+#dayworktable th{
+    background-color:red;
+    color:aliceblue;
+}
+#dayworkcondition{
+    display: none;
+}
+#dayworkpagectrl{
+    font-size:  0.8cm;
+    text-align: center;
+    display:   none;
+}
+#dayworkgopage{
+    width: 30px;
+}
+#dayworknextPageSpan,#dayworkprePageSpan{
+    display: none;
+}
+
+
+#workdiv{
+    margin-top: 20px;
+    display: none;
+}
+#worktable{
+    margin: 0px auto;
+    border: 1px black solid;
+    border-collapse: collapse;
+}
+#worktable th,#worktable td{
+    border: 1px black solid;
+    padding: 10px;
+}
+#worktable th{
+    background-color:darkgreen;
+    color:aliceblue;
+}
+#workcondition{
+    display: none;
+}
+#workpagectrl{
+    font-size:  0.8cm;
+    text-align: center;
+    display:   none;
+}
+#workgopage{
+    width: 30px;
+}
+#worknextPageSpan,#workprePageSpan{
+    display: none;
+}

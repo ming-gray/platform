@@ -15,6 +15,7 @@ import com.platformmake.model.dao.ConnectMapper;
 import com.platformmake.model.dao.EquipinfoMapper;
 import com.platformmake.model.dao.PlaninfoMapper;
 import com.platformmake.model.dao.ProductinfoMapper;
+import com.platformmake.model.dao.TrackinfoMapper;
 import com.platformmake.model.dao.WorkinfoMapper;
 import com.platformmake.model.entity.Connect;
 import com.platformmake.model.entity.ConnectExample;
@@ -23,6 +24,7 @@ import com.platformmake.model.entity.Planinfo;
 import com.platformmake.model.entity.PlaninfoExample;
 import com.platformmake.model.entity.Productinfo;
 import com.platformmake.model.entity.ProductinfoExample;
+import com.platformmake.model.entity.Trackinfo;
 import com.platformmake.model.entity.Workinfo;
 import com.platformmake.model.entity.WorkinfoExample;
 
@@ -49,6 +51,9 @@ public class WorkinfoService {
 	@Autowired
 	private ProductinfoMapper prom;
 	
+	@Autowired
+	private TrackinfoMapper tm;
+	
 	/**
 	  *  添加生产调度信息，新建工单
 	 * @param wokinfo
@@ -59,9 +64,7 @@ public class WorkinfoService {
 		Planinfo planinfo = pm.selectByPrimaryKey(workinfo.getPlanid());
 		
 		// 对已启动的生产计划新建工单
-		if(planinfo.getPlanstate() == 20) {
-			// 生成生产跟踪记录？
-			wm.insert(workinfo);
+		if(planinfo.getPlanstate() == 20) {					
 			
 			// 设置创建时间
 			workinfo.setCretime(new Timestamp(new Date().getTime()));
@@ -69,6 +72,8 @@ public class WorkinfoService {
 			// 默认第一次修改时间为创建时间
 			workinfo.setUpdtime(new Timestamp(new Date().getTime()));
 			wm.updateByPrimaryKeySelective(workinfo);
+			wm.insert(workinfo);
+			System.out.println(workinfo);
 			
 			return true;
 		}
@@ -100,6 +105,17 @@ public class WorkinfoService {
 			workinfo.setWorksttime(new Timestamp(new Date().getTime()));
 			workinfo.setUpdtime(new Timestamp(new Date().getTime()));
 			wm.updateByPrimaryKey(workinfo);
+			
+			// 生成生产跟踪记录
+			Trackinfo trackinfo = new Trackinfo();
+			trackinfo.setCratetime(new Timestamp(new Date().getTime()));
+			trackinfo.setUptime(new Timestamp(new Date().getTime()));
+			trackinfo.setPlanid(workinfo.getPlanid());
+			trackinfo.setProid(workinfo.getProid());
+			trackinfo.setTrackstate(10);
+			trackinfo.setWorkid(workinfo.getWorkid());
+			trackinfo.setWorkingCount(workinfo.getWorkcount());
+			tm.insertSelective(trackinfo);
 			
 			return workinfo;
 		}else {

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Insert title here</title>
+
+    <!-- Bootstrap -->
+    <link href="style/bootstrap.min.css" rel="stylesheet">
+    <link href="style/bootstrap-select.min.css" rel="stylesheet">
+
+
+    <link rel="stylesheet" href="style/Trackmain.css">
+
+    <script type="text/javascript" src="script/jquery-3.3.1.min.js"></script>
+    <script src="script/bootstrap.min.js"></script>
+    <script src="script/bootstrap-select.js"></script>
+    <script type="text/javascript" src="script/Trackmain.js"></script>
+    <script type="text/javascript" src="script/koala-1.1.1.js"></script>
+
+
+
+</head>
+
+<body>
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="javascript:void(0)">
+                    <img alt="Brand" src="img/user.png">
+                </a>
+            </div>
+            <p class="navbar-text">生产跟踪模块</p>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">登录</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">更多 <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="javascript:void(0)">个人中心</a></li>
+                        <li><a href="javascript:void(0)">工厂管理</a></li>
+                        <li><a href="javascript:void(0)">意见反馈</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="javascript:void(0)">设置</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+        </div><!-- /.container-fluid -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <form class="navbar-form navbar-left">
+                <button type="submit" class="btn btn-default" id="mainchangebtn">首页</button>
+                <button type="submit" class="btn btn-default" id="productchangebtn">产品管理</button>
+                <button type="submit" class="btn btn-default" id="equipchangebtn">设备管理</button>
+                <button type="submit" class="btn btn-default" id="orderchangebtn">订单管理</button>
+                <button type="submit" class="btn btn-default" id="planchangebtn"> 生产计划管理</button>
+                <a class="btn btn-default" href="workinfo.html" role="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>生产调度管理</a>
+                <a class="btn btn-default" href="Trackmain.html" role="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>生产跟踪管理</a>
+            </form>
+        </div><!-- /.navbar-collapse -->
+
+
+
+    </nav>
+
+    <div>
+        欢迎您<span id="curname"></span><br>
+        <!--    <span type="hidden" id="curid"></span>-->
+        <input type="hidden" id="curid">
+        <input type="button" value="查询工单" id="searchwork"><br>
+        <input type="button" value="查询跟踪" id="searchtrack"><br>
+        <input type="button" value="查询报工" id="searchdaywork"><br>
+    </div>
+
+
+
+
+
+
+
+    <!--   工单表-->
+    <div id="work">
+        <input type="hidden" name="workpageNum" value="1" id="workpageNum">
+        <input type="hidden" name="workpageSize" value="3" id="workpageSize">
+        <div id="workcondition">
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            工单编号:<input type="text" name="workid">&nbsp;
+            产品编号:<input type="text" name="planid">&nbsp;
+            设备编号:<input type="text" name="eqid">&nbsp;
+            工单状态<select name="workstate" id="selworkstate">
+                <option value="">==请选择==</option>
+                <option value="10">未开始</option>
+                <option value="20">生产中</option>
+                <option value="30">已完成</option>
+            </select><br>
+            <input type="button" value="查询" id="searchworkbtn"><br>
+            <br><br><br><br>
+        </div>
+
+        <div id="workdiv">
+            <table id="worktable">
+                <tr>
+                    <th>序号</th>
+                    <th>工单编号</th>
+                    <th>工单数量</th>
+                    <th>设备编号</th>
+                    <th>计划编号</th>
+                    <th>产品编号</th>
+                    <th>工单状态</th>
+                    <th>操作</th>
+                </tr>
+            </table>
+        </div>
+        <div id="workpagectrl">
+            共<span id="worktotal"></span>条 &nbsp;&nbsp;
+            共<span id="workpages"></span>页 &nbsp;&nbsp;
+            第<span id="workcurpage"></span>页
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="javascript:void(0)" id="workprePage">上一页</a> <span id="workprePageSpan">上一页</span>
+            <input type="number" id="workgopage" min="1">
+            <a href="javascript:void(0)" id="workgoBtn">GO</a>
+            <a href="javascript:void(0)" id="worknextPage">下一页</a> <span id="worknextPageSpan">上一页</span>
+        </div>
+
+    </div>
+
+    <!--跟踪表表  -->
+    <div id="track">
+        <input type="hidden" name="trackpageNum" value="1" id="trackpageNum">
+        <input type="hidden" name="trackpageSize" value="3" id="trackpageSize">
+        <div id="trackcondition">
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            工单编号:<input type="text" name="workid">&nbsp;
+            计划编号:<input type="text" name="proid">&nbsp;
+            产品编号:<input type="text" name="planid">&nbsp;
+            工单状态<select name="trackstate" id="selworkstate">
+                <option value="">==请选择==</option>
+                <option value="10">生产中</option>
+                <option value="20">已完成</option>
+            </select><br>
+            <input type="button" value="查询" id="searchtrackbtn"><br>
+            <br><br><br><br>
+        </div>
+
+        <div id="trackdiv">
+            <table id="tracktable">
+                <tr>
+                    <th>序号</th>
+                    <th>编号</th>
+                    <th>工单编号</th>
+                    <th>计划编号</th>
+                    <th>产品编号</th>
+                    <th>工单状态</th>
+                    <th>工单数量</th>
+                    <th>合格数</th>
+                    <th>操作</th>
+                </tr>
+            </table>
+        </div>
+        <div id="trackpagectrl">
+            共<span id="tracktotal"></span>条 &nbsp;&nbsp;
+            共<span id="trackpages"></span>页 &nbsp;&nbsp;
+            第<span id="trackcurpage"></span>页
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="javascript:void(0)" id="trackprePage">上一页</a> <span id="trackprePageSpan">上一页</span>
+            <input type="number" id="trackgopage" min="1">
+            <a href="javascript:void(0)" id="trackgoBtn">GO</a>
+            <a href="javascript:void(0)" id="tracknextPage">下一页</a> <span id="tracknextPageSpan">上一页</span>
+        </div>
+
+        <div id="adddaywork">
+            加工数量: <input type="num" value="0" name="workingCount" id="newdayworkcount">&nbsp;
+            合格数量: <input type="num" value="0" name="quaCont" id="newquacount">&nbsp;&nbsp;&nbsp;&nbsp;
+            加工开始时间<input type="date" name="sttime" id="newsttime">
+            加工结束时间<input type="date" name="entime" id="newentime"><br>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="button" value="确认报工" id="checkwork"><br>
+        </div>
+
+        <br><br><br><br>
+
+
+    </div>
+
+    <!--   -->
+    <div id="daywork">
+        <input type="hidden" name="dayworkpageNum" value="1" id="dayworkpageNum">
+        <input type="hidden" name="dayworkpageSize" value="3" id="dayworkpageSize">
+        <div id="dayworkcondition">
+            工单编号： <input type="text" name="workid">&nbsp;
+            设备编号: <input type="text" name="eqid"><br>
+            报工开始时间:<input type="text" name="sttime"><br>
+            报工结束时间:<input type="text" name="entime">&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="button" value="查询" id="searchdayworkbtn"><br>
+            <br><br><br><br>
+        </div>
+
+        <div id="dayworkdiv">
+            <table id="dayworktable">
+                <tr>
+                    <th>序号</th>
+                    <th>工单编号</th>
+                    <th>设备编号编号</th>
+                    <th>加工开始时间</th>
+                    <th>结束时间</th>
+                    <th>报工数量</th>
+                    <th>合格数量</th>
+                    <th>不合格数量</th>
+                </tr>
+            </table>
+        </div>
+        <div id="dayworkpagectrl">
+            共<span id="dayworktotal"></span>条 &nbsp;&nbsp;
+            共<span id="dayworkpages"></span>页 &nbsp;&nbsp;
+            第<span id="dayworkcurpage"></span>页
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="javascript:void(0)" id="dayworkprePage">上一页</a> <span id="tdayworkprePageSpan">上一页</span>
+            <input type="number" id="dayworkgopage" min="1">
+            <a href="javascript:void(0)" id="dayworkgoBtn">GO</a>
+            <a href="javascript:void(0)" id="dayworknextPage">下一页</a> <span id="dayworknextPageSpan">上一页</span>
+        </div>
+
+    </div>
+
+
+</body></html>
