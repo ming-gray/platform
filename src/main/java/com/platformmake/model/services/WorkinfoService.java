@@ -264,10 +264,11 @@ public class WorkinfoService {
 		}
 		for(Connect c: list) {
 			Equipinfo eq = em.selectByPrimaryKey(c.getEqid());
+			
 			// 判断设备状态为未启用
 			if(eq.getEqstate() == 20) {
 				// 还要判断产能：日产能×间隔天数>工单数量
-				
+				System.out.println("我进来了");
 				Planinfo planinfo = pm.selectByPrimaryKey(workinfo.getPlanid());
 				long daysbtween = planinfo.getDdl().getTime() - new Date().getTime();
 				if(daysbtween * c.getYield() > planinfo.getPlancount()) {
