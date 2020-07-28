@@ -266,4 +266,31 @@ public class Orderinfo {
     public void setApc(Integer apc) {
         this.apc = apc;
     }
+
+	public Orderinfo() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Orderinfo(Integer ordid, String ordsource, Integer proid, Integer proordnum, Date orddl, Integer ordstate,
+			Integer quacom, Integer apc) {
+		super();
+		this.ordid = ordid;
+		this.ordsource = ordsource;
+		this.proid = proid;
+		this.proordnum = proordnum;
+		this.orddl = orddl;
+		this.ordstate = ordstate;
+		this.quacom = quacom;
+		this.apc = apc;
+	}
+
+	@Override
+	public String toString() {
+		return "Orderinfo [ordid=" + ordid + ", ordsource=" + ordsource + ", proid=" + proid + ", proordnum="
+				+ proordnum + ", orddl=" + orddl + ", ordstate=" + ordstate + ", quacom=" + quacom + ", apc=" + apc
+				+ "]";
+	}
+    
+    
 }

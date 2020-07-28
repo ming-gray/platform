@@ -330,4 +330,29 @@
       apc = #{apc,jdbcType=INTEGER}
     where ordid = #{ordid,jdbcType=INTEGER}
   </update>
+  
+  <select id="statisticOrder" resultType="Map">
+        SELECT
+			ordstate STATUS,
+			count(*) num 
+		FROM
+			orderinfo 
+		GROUP BY
+			ordstate
+    </select>
+
+    <select id="statisticOrderByMonth" resultType="Map">
+        SELECT MONTH
+			( orddl ) MONTH,
+			COUNT(*) num 
+		FROM
+			orderinfo 
+		WHERE
+			YEAR ( orddl ) = YEAR (
+			NOW()) 
+		GROUP BY
+			MONTH (
+			orddl)
+    </select>
+  
 </mapper>

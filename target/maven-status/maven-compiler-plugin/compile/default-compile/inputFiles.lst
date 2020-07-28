@@ -5,6 +5,7 @@ C:\Users\ming\Documents\workspace-sts-3.9.13.RELEASE\platform\src\main\java\com\
 C:\Users\ming\Documents\workspace-sts-3.9.13.RELEASE\platform\src\main\java\com\platformmake\model\dao\ConnectMapper.java
 C:\Users\ming\Documents\workspace-sts-3.9.13.RELEASE\platform\src\main\java\com\platformmake\model\entity\ProductinfoExample.java
 C:\Users\ming\Documents\workspace-sts-3.9.13.RELEASE\platform\src\main\java\com\platformmake\model\entity\Trackinfo.java
+C:\Users\ming\Documents\workspace-sts-3.9.13.RELEASE\platform\src\main\java\com\platformmake\model\services\PlanService.java
 C:\Users\ming\Documents\workspace-sts-3.9.13.RELEASE\platform\src\main\java\com\platformmake\model\services\TrackService.java
 C:\Users\ming\Documents\workspace-sts-3.9.13.RELEASE\platform\src\main\java\com\platformmake\model\entity\Workinfo.java
 C:\Users\ming\Documents\workspace-sts-3.9.13.RELEASE\platform\src\main\java\com\platformmake\model\entity\Planinfo.java
@@ -28,5 +29,6 @@ C:\Users\ming\Documents\workspace-sts-3.9.13.RELEASE\platform\src\main\java\com\
 C:\Users\ming\Documents\workspace-sts-3.9.13.RELEASE\platform\src\main\java\com\platformmake\model\entity\ConnectExample.java
 C:\Users\ming\Documents\workspace-sts-3.9.13.RELEASE\platform\src\main\java\com\platformmake\model\entity\PlaninfoExample.java
 C:\Users\ming\Documents\workspace-sts-3.9.13.RELEASE\platform\src\main\java\com\platformmake\model\services\productService.java
+C:\Users\ming\Documents\workspace-sts-3.9.13.RELEASE\platform\src\main\java\com\platformmake\model\controllers\PlanController.java
 C:\Users\ming\Documents\workspace-sts-3.9.13.RELEASE\platform\src\main\java\com\platformmake\model\services\equip_pro.java
 C:\Users\ming\Documents\workspace-sts-3.9.13.RELEASE\platform\src\main\java\com\platformmake\model\entity\OrderinfoExample.java

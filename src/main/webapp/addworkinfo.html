@@ -32,51 +32,43 @@
     <script type="text/javascript" src="script/addworkinfo.js"></script>
     <link href="style/addworkinfo.css" rel="stylesheet">
 
-<div id="add">    
-    
+    <div id="add">
 
-    <input type="hidden" name="workid" id="workid" value="0">
-    <input type="hidden" name="updtime" id="updtime" value="2020-07-30 12:23:13">
-    <input type="hidden" name="cretime" id="cretime" value="2020-07-30 12:23:13">
-    <input type="hidden" name="eqid" value="0">
-    <!--这个可能要删，看数据库的情况-->
-    <input type="hidden" name="workstate" value="10">
-    计划编号 : <select name="planid" id="selplan" class="selectpicker show-tick" title="请选择计划" data-live-search=“true” data-size="5">
-        <option data-subtext="已启用">1</option>
-        <option data-subtext="未启用" disabled>2</option>
-        <option data-subtext="未启用" disabled>3</option>
-        <option data-subtext="未启用" disabled>4</option>
-        <option data-subtext="已启用">5</option>
-    </select><br><br>
-    
-    产品名称 : <select name="proid" id="selpro" class="selectpicker show-tick" title="请选择产品" data-live-search=“true” data-size="5" disabled>
-        <option data-subtext="可选择">1</option>
-        <option data-subtext="可选择">2</option>
-        <option disabled>3</option>
-        <option disabled>4</option>
-        <option disabled>5</option>
-    </select><br><br>
-    设备编号 : <select name="eqid" id="seleq" disabled>
-        <option value="0">请选择设备</option>
-        <option disabled>2</option>
-        <option disabled>3</option>
-        <option disabled>4</option>
-        <option disabled>5</option>
-    </select><br><br>
-    工单数量 : <input name="workcount" id="workcount" type="number" min="1"><br><br>
-    工单状态 : <select name="workstate" id="workstate" class="selectpicker show-tick" title="请选择状态" data-live-search=“true” data-size="5">
-        <option data-subtext="未启用">10</option>
-        <option data-subtext="生产中" disabled>20</option>
-        <option data-subtext="已完成" disabled>30</option>
-    </select><br><br>
-    
-    
-    开始日期 :<input type="date" id="worksttime" value="<fmt:formatDate value='${worksttime }' pattern='yyyy-MM-dd'/>" name="worksttime"><br><br>
-    结束日期 :<input type="date" id="workentime" value="<fmt:formatDate value='${workentime }' pattern='yyyy-MM-dd'/>" name="workentime"><br><br>
-    
-    <button type="button" class="btn btn-primary" id="save">保存</button>
 
-</div>
+        <input type="hidden" name="workid" id="workid" value="0">
+        <input type="hidden" name="updtime" id="updtime" value="2020-07-30 12:23:13">
+        <input type="hidden" name="cretime" id="cretime" value="2020-07-30 12:23:13">
+        <input type="hidden" name="eqid" value="0">
+        <!--这个可能要删，看数据库的情况-->
+        <input type="hidden" name="workstate" value="10">
+        计划编号 : <select name="planid" id="selplan">
+            <option value="0">请选择计划</option>
+        </select><br><br>
+
+        产品编号 : <select name="proid" id="selpro" disabled>
+            <option value="0">请选择产品</option>
+        </select><br><br>
+        设备编号 : <select name="eqid" id="seleq" disabled>
+            <option value="0">请选择设备</option>
+            <option disabled>2</option>
+            <option disabled>3</option>
+            <option disabled>4</option>
+            <option disabled>5</option>
+        </select><br><br>
+        工单数量 : <input name="workcount" id="workcount" type="number" min="1"><br><br>
+        工单状态 : <select name="workstate" id="workstate" class="selectpicker show-tick" title="请选择状态" data-live-search=“true” data-size="5">
+            <option data-subtext="未启用">10</option>
+            <option data-subtext="生产中" disabled>20</option>
+            <option data-subtext="已完成" disabled>30</option>
+        </select><br><br>
+
+
+        开始日期 :<input type="date" id="worksttime" value="<fmt:formatDate value='${worksttime }' pattern='yyyy-MM-dd'/>" name="worksttime"><br><br>
+        结束日期 :<input type="date" id="workentime" value="<fmt:formatDate value='${workentime }' pattern='yyyy-MM-dd'/>" name="workentime"><br><br>
+
+        <button type="button" class="btn btn-primary" id="save">保存</button>
+
+    </div>
 
 </body>
 

@@ -316,9 +316,14 @@ public class WorkinfoService {
 		
 	}
 	
-//	public List<Productinfo> searchProByPlan(int planid){
-//		Planinfo planinfo = pm.selectByPrimaryKey(planid);
-//		prom.selectByPrimaryKey(planinfo.getProid()).getProname();
-//		
-//	}
+	/**
+	  *  根据计划id获得产品id
+	 * 
+	 * @param planid
+	 * @return
+	 */
+	public int searchProByPlan(int planid){
+		Planinfo planinfo = pm.selectByPrimaryKey(planid);
+		return planinfo.getProid();		
+	}
 }

@@ -95,13 +95,13 @@ public class WorkinfoController {
 	}
 	
 	/**
-	  *  获取所有生产计划
-	 * 
+	   *  根据计划id获得产品id
+	 * @param planid
 	 * @return
 	 */
-	@RequestMapping("/searchallplans")
-	public List<Planinfo> doSearchAllPlans(){
-		return service.searchAllPlans();
+	@RequestMapping("/getprid")
+	public int doSearchProByPlan(int planid) {
+		return service.searchProByPlan(planid);
 	}
 	
 	/**

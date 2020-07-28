@@ -253,4 +253,15 @@
       eqpic = #{eqpic,jdbcType=VARCHAR}
     where eqid = #{eqid,jdbcType=INTEGER}
   </update>
+  
+  <select id="statisticsEq" resultType="_int">
+        SELECT
+			eqstate STATUS,
+			count(*) num 
+		FROM
+			equipinfo 
+		GROUP BY
+			eqstate
+   </select>
+  
 </mapper>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>添加生产计划</title>
+<script src="script/jquery-3.3.1.min.js"></script>
+<script type="script/koala-1.1.1.js"></script>
+<script src="script/addplan.js"></script>
+</head>
+<body>
+  欢迎您，admin
+   <div id="add">
+       订单编号：<select name="ordid" id="selordid" >
+         <option value="">==请选择==</option>
+     </select><br>
+        产品编号：<select name="proid" id="selproid" disabled>
+         <option value="">==请选择==</option>
+     </select><br>
+       产品数量<input type="text" name="plancount" id="plancount"><br>
+       交货日期<input type="text" name="ddl" id="ddl"><br>
+       计划开始日期<input type="date" name="plansttime" id="plansttime"><br>
+       计划结束日期<input type="date" name="planentime" id="planenttime"><br>
+   <!--    计划状态<input type="text" name="planstate" id="planstate"><br>-->  
+	<input type="button" value="新增计划"  id="addplanBtn">
+   </div>
+</body>
+</html>

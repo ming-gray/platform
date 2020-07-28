@@ -1,0 +1,32 @@
+#resulttable{
+    margin: 0px auto;
+    border: 1px black solid;
+    border-collapse: collapse;
+}
+
+#resulttable th,#resulttable td{
+    border: 1px black solid;
+    padding: 10px;
+}
+
+#resulttable th{
+    background-color:blue;
+    color:aliceblue;
+}
+
+#resultdiv{
+    margin-top: 20px;
+    display: none;
+}
+#pagectrl{
+    font-size:  0.8em;
+    text-align: center;
+    display:   none;
+}
+#gopage{
+    width: 30px;
+}
+
+#nextPageSpan,#prePageSpan{
+    display: none;
+}

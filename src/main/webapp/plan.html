@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>生产计划模块</title>
+<link rel="stylesheet" href="style/bootstrap.css">
+<link href="style/bootstrap.min.css" rel="stylesheet">
+<link href="style/bootstrap-select.min.css" rel="stylesheet">
+<script type="text/javascript" src="script/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="script/koala-1.1.1.js"></script>
+<script src="script/bootstrap.min.js"></script>
+<script src="script/bootstrap-select.js"></script>
+
+<script src="script/plan.js"></script>
+<script src="script/modplan.js"></script>
+<link rel="stylesheet" href="style/plan.css">
+</head>
+<body>
+
+  <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="javascript:void(0)">
+                    <img alt="Brand" src="img/user.png">
+                </a>
+            </div>
+            <p class="navbar-text">生产计划模块</p>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">登录</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">更多 <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="javascript:void(0)">个人中心</a></li>
+                            <li><a href="javascript:void(0)">工厂管理</a></li>
+                            <li><a href="javascript:void(0)">意见反馈</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="javascript:void(0)">设置</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+        </div><!-- /.container-fluid -->
+         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <form class="navbar-form navbar-left">
+                    <a class="btn btn-default" href="platformmain.html" role="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>首页</a>
+                    <button type="submit" class="btn btn-default" id="productchangebtn">产品管理</button>
+                    <button type="submit" class="btn btn-default" id="equipchangebtn"  >设备管理</button>
+                    <button type="submit" class="btn btn-default" id="orderchangebtn"  >订单管理</button>
+                    <a class="btn btn-default" href="plan.html" role="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>生产计划管理</a>
+                    <a class="btn btn-default" href="workinfo.html" role="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>生产调度管理</a>
+                    <a class="btn btn-default" href="Trackmain.html" role="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>生产跟踪管理</a>
+                </form>
+            </div><!-- /.navbar-collapse -->
+        
+        
+        
+    </nav>
+
+
+
+
+欢迎您，admin
+   <!-- 隐藏分页信息 -->
+   <input type="hidden" name="pageNum" value="1" id="pageNum">
+   <input type="hidden" name="pageSize" value="3">
+   
+   <div id="search">
+        计划编号：<select name="planid" id="selplan">
+          <option value="">==请选择==</option>
+     </select>
+        订单编号：<select name="ordid" id="selordid" >
+         <option value="">==请选择==</option>
+     </select><br>
+        产品编号：<select name="proid" id="selproid" >
+         <option value="">==请选择==</option>
+     </select><br>
+        计划状态：<select name="planstate" id="selpstate" >
+         <option value="">==请选择==</option>
+          <option value="10">未启动</option>
+          <option value="20">已启动</option>
+     </select><br>
+	<input type="button" value="查询"  id="searchBtnShow">
+    <input type="button" value="隐藏查询"  id="searchBtn"  style="VISIBILITY: hidden">
+    <input type="button" value="新建计划"  id="addBtn">
+   </div>
+   
+   <div id="resultdiv">
+       <table id="resulttable">
+         <tr>
+           <th>序号</th>
+           <th>计划编号</th>
+           <th>订单编号</th>
+           <th>产品编号</th>
+           <th>数量</th>
+           <th>交货日期</th>
+           <th>计划开始日期</th>
+           <th>计划结束日期</th>    
+           <th>计划状态</th>
+           <th>操作</th>
+         </tr>
+       </table>
+   </div>
+   
+     <div id="pagectrl">
+             共<span id="total"></span>条
+             共<span id="pages"></span>页
+             第<span id="curpage"></span>页
+        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;     
+       <a href="javascript:void(0)" id="prePage">上一页</a>
+       <input type="number" id="gopage" min="1"> <a href="javascript:void(0)" id="goBtn">Go</a>
+       <a href="javascript:void(0)" id="nextPage">下一页</a>
+   </div>
+</body>
+</html>
