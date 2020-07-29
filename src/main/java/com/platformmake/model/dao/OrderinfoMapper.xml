@@ -333,7 +333,7 @@
   
   <select id="statisticOrder" resultType="Map">
         SELECT
-			ordstate STATUS,
+			ordstate status,
 			count(*) num 
 		FROM
 			orderinfo 
@@ -343,7 +343,7 @@
 
     <select id="statisticOrderByMonth" resultType="Map">
         SELECT MONTH
-			( orddl ) MONTH,
+			( orddl ) month,
 			COUNT(*) num 
 		FROM
 			orderinfo 

@@ -65,6 +65,11 @@ public class PlanController {
 		
 		return service.searchAllPlan();
 	}
+	@RequestMapping("/startplan")
+	public boolean doaddStartPlan(int planid) {
+		return service.addStartPlan(planid);
+	//	return true;
+	}
 	/**
 	 * 修改计划控制
 	 * @param plan
@@ -73,6 +78,7 @@ public class PlanController {
 	@RequestMapping("/modplan")
 	public boolean doModPlan(Planinfo plan) {
 		return service.modPlan(plan);
+	//	return true;
 	}
 	/**
 	 * 删除计划控制

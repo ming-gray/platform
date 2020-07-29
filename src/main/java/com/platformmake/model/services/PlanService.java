@@ -88,12 +88,22 @@ public class PlanService {
 	 * @param plan
 	 * @return
 	 */
-	public boolean addStartPlan(Planinfo plan) {
+	public boolean addStartPlan(int planid) {
+		PlaninfoExample example = new PlaninfoExample();
+		Criteria cc = example.createCriteria();
+		cc.andPlanidEqualTo(planid);
+		List<Planinfo> list = planinfoMapper.selectByExample(example);
+		Planinfo plan = list.get(0);
 		//修改计划状态为已启动
 		plan.setPlanstate(20);
+		int i= planinfoMapper.updateByPrimaryKey(plan);
+		
+		
+	//	((Planinfo) plan).setPlanstate(20);
 		//创建新工单
-		Workinfo work = new Workinfo(0,null,null,0,10,plan.getPlanid(),0,plan.getProid(),null,null);
-		int i = workinfoMapper.insert(work);
+//		Workinfo work = new Workinfo(0,null,null,0,10,plan.getPlanid(),0,plan.getProid(),null,null);
+	//	int i = workinfoMapper.insert(work);
+	//	return i>0;
 		return i>0;
 	}
 	/**
@@ -101,11 +111,12 @@ public class PlanService {
 	 * @param plan
 	 * @return
 	 */
-	public boolean modPlan(Planinfo plan) {
+	public boolean modPlan(Planinfo plan){
+		if(plan.getPlanstate()==10) {
         //获取要修改的计划
-		Planinfo plan1 = planinfoMapper.selectByPrimaryKey(plan.getPlanid());
+	//	Planinfo plan1 = planinfoMapper.selectByPrimaryKey(plan.getPlanid());
 		//判断要修改计划的状态
-		if(plan1.getPlanstate()==10) {
+	//	if(plan1.getPlanstate()==10) {
 			planinfoMapper.updateByPrimaryKeySelective(plan);
 			return true;
 		}

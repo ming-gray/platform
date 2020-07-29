@@ -3,10 +3,10 @@ $(function () {
         if (data) {
             for (var i = 0; i < data.length; i++) {
                 var planinfo = data[i];
-                if(planinfo.planstate == 20){
+                if (planinfo.planstate == 20) {
                     $("<option></option>").html(planinfo.planid).val(planinfo.planid).appendTo("#selplan");
                 }
-                
+
             }
         }
     }, "json");
@@ -19,7 +19,10 @@ $(function () {
         } else {
 
             $.post("/platform/getprid", "planid=" + planid, function (data) {
-                if (data) {
+                if (data == 0) {
+                    alert("未找到与计划匹配的产品，请重新选择计划");
+
+                } else {
                     $("<option></option>").html(data).val(data).appendTo("#selpro");
                 }
 
@@ -39,8 +42,7 @@ $(function () {
                 if (data) {
                     var workinfo = data;
                     $("<option></option>").html(workinfo.eqid).val(workinfo.eqid).appendTo("#seleq");
-                }
-                else{
+                } else {
                     alert("未找到匹配的未启动设备");
                 }
 
@@ -57,17 +59,17 @@ $(function () {
     $("#save").click(function () {
 
         var planid = $("#selplan").val();
-        if (!planid) {
+        if (planid == 0) {
             alert("请选择计划编号");
             return;
         }
         var proid = $("#selpro").val();
-        if (!proid) {
+        if (proid == 0) {
             alert("请选择产品编号");
             return;
         }
         var eqid = $("#seleq").val();
-        if (!eqid) {
+        if (eqid == 0) {
             alert("请选择设备编号");
             return;
         }
@@ -94,8 +96,10 @@ $(function () {
 
         $.post("/platform/addwork", $("[id]").serialize(), function (data) {
             if (data == "true") {
+                sessionStorage.setItem("from", "pageA");
+                alert("保存成功");
                 window.location.href = "/platform/workinfo.html";
-                // $("#searchBtn").click();
+                //$("#searchBtn").click();
 
             } else {
                 alert("请重试！");

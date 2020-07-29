@@ -3,6 +3,8 @@ package com.platformmake.model.dao;
 import com.platformmake.model.entity.Orderinfo;
 import com.platformmake.model.entity.OrderinfoExample;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface OrderinfoMapper {
@@ -93,4 +95,8 @@ public interface OrderinfoMapper {
      * @mbg.generated Fri Jul 24 19:21:12 CST 2020
      */
     int updateByPrimaryKey(Orderinfo record);
+    
+    List<Map<String,Object>> statisticOrder();
+
+    List<Map<String,Object>> statisticOrderByMonth();
 }

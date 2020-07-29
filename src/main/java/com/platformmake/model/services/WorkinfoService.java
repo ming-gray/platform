@@ -13,6 +13,7 @@ import com.github.pagehelper.PageInfo;
 import com.platformmake.model.entity.WorkinfoExample.Criteria;
 import com.platformmake.model.dao.ConnectMapper;
 import com.platformmake.model.dao.EquipinfoMapper;
+import com.platformmake.model.dao.OrderinfoMapper;
 import com.platformmake.model.dao.PlaninfoMapper;
 import com.platformmake.model.dao.ProductinfoMapper;
 import com.platformmake.model.dao.TrackinfoMapper;
@@ -20,6 +21,7 @@ import com.platformmake.model.dao.WorkinfoMapper;
 import com.platformmake.model.entity.Connect;
 import com.platformmake.model.entity.ConnectExample;
 import com.platformmake.model.entity.Equipinfo;
+import com.platformmake.model.entity.Orderinfo;
 import com.platformmake.model.entity.Planinfo;
 import com.platformmake.model.entity.PlaninfoExample;
 import com.platformmake.model.entity.Productinfo;
@@ -53,6 +55,9 @@ public class WorkinfoService {
 	
 	@Autowired
 	private TrackinfoMapper tm;
+	
+	@Autowired
+	private OrderinfoMapper om;
 	
 	/**
 	  *  添加生产调度信息，新建工单
@@ -235,7 +240,7 @@ public class WorkinfoService {
 			System.out.println("已启动工单不可编辑");
 			return false;
 		}
-		else {
+		else if(w.getWorkstate() == 10) {
 			wm.updateByPrimaryKeySelective(workinfo);
 			
 			// 设置更新时间			
@@ -244,7 +249,25 @@ public class WorkinfoService {
 			
 			return true;
 		}
-		
+		else {
+			workinfo.setWorkentime(new Date());
+			workinfo.setUpdtime(new Timestamp(new Date().getTime()));
+			wm.updateByPrimaryKey(workinfo);
+			
+			if(wm.hasRelatedUnfinishedSchedule(workinfo.getPlanid()) == 0) {
+				int finishedNum = wm.hasFinishedNum(workinfo.getPlanid());
+				Planinfo planinfo = pm.selectByPrimaryKey(workinfo.getPlanid());
+				if(planinfo.getPlancount() <= finishedNum) {
+					planinfo.setPlanstate(30);
+					planinfo.setPlanentime(new Date());
+					pm.updateByPrimaryKeySelective(planinfo);
+					Orderinfo orderinfo = om.selectByPrimaryKey(planinfo.getOrdid());
+					orderinfo.setOrdstate(50);
+					om.updateByPrimaryKeySelective(orderinfo);				
+				}		
+			}
+			return true;
+		}
 	}
 	
 	/**
@@ -287,6 +310,9 @@ public class WorkinfoService {
 				System.out.println("我进来了");
 				Planinfo planinfo = pm.selectByPrimaryKey(workinfo.getPlanid());
 				long daysbtween = planinfo.getDdl().getTime() - new Date().getTime();
+				System.out.println(daysbtween);
+				int day = (int)(daysbtween/(3600*1000*24));
+				System.out.println(day);
 				if(daysbtween * c.getYield() > planinfo.getPlancount()) {
 					workinfo.setEqid(eq.getEqid());
 					wm.updateByPrimaryKeySelective(workinfo);
@@ -324,6 +350,13 @@ public class WorkinfoService {
 	 */
 	public int searchProByPlan(int planid){
 		Planinfo planinfo = pm.selectByPrimaryKey(planid);
-		return planinfo.getProid();		
+		if(null != planinfo.getProid()) {
+			return planinfo.getProid();
+		}
+		else {
+			System.out.println("没找到");
+			return 0;
+			
+		}
 	}
 }

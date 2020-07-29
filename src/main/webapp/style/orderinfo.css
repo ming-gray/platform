@@ -1,0 +1,38 @@
+#adddiv{
+	margin-top: 15px;
+	display:none;
+}
+#resulttable{
+	margin:0px auto;
+	border:1px black solid;
+	border-collapse: collapse;
+}
+/*表格中单元格的样式*/
+#resulttable th,#resulttable td{
+	border :1px black solid;
+	padding: 10px;
+}
+#resulttable th{
+	background-color: rgb(255, 255, 255);
+	color:rgb(247, 169, 9);
+}
+#resultdiv{
+	margin-top: 15px;
+	display:none;
+}
+#pagectrl{
+	font-size:0.5cm;
+	text-align: center;
+	display:none;
+}
+#goPage{
+	width:1px;
+	display: none;
+}
+#prePageSpan,#nextPageSpan{
+	display: none;
+}
+
+#searchBtn{
+	display: none;
+}

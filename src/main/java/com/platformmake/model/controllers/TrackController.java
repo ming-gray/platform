@@ -10,7 +10,7 @@ import com.platformmake.model.entity.Productinfo;
 import com.platformmake.model.entity.Trackinfo;
 import com.platformmake.model.entity.Workinfo;
 import com.platformmake.model.services.TrackService;
-import com.platformmake.model.services.productService;
+import com.platformmake.model.services.ProductService;
 
 @RestController//该类下所有方法都添加	@ResponseBody
 public class TrackController {
@@ -19,7 +19,7 @@ public class TrackController {
 		private TrackService track;
 		
 		@Autowired
-		private productService product;
+		private ProductService product;
 		
 		/**
 		 * 通过

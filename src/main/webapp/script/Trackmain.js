@@ -1,14 +1,10 @@
+
 //track
 $(function(){
     
     $("#searchtrack").click(function(){
         $("#track").show();
         $("#trackcondition").show();
-
-        $("#work").hide();
-        $("#workcondition").hide();
-        $("#workdiv").hide();
-        $("#workpagectrl").hide();
        
         $("#daywork").hide();
         $("#dayworkcondition").hide();
@@ -51,7 +47,7 @@ $(function(){
                         
                         if(Trackinfo.workingCount*1<=Trackinfo.qualifiedCount*1 && Trackinfo.trackstate*1 != 20 ){
                             
-                            $("<input type='button' value='完成报工'>").click(function(){
+                $("<input type='button' value='完成报工' class='btn btn-primary' data-toggle='modal'>").click(function(){
                                 
                             var id=$(this).parent().parent().find("td:eq(1)").html();
                             var isok =confirm("确认完成报工");
@@ -67,6 +63,7 @@ $(function(){
                                        else{
                                            alert("完成报工失败")
                                        }
+                                       return ;
                                    },"text");
                                }
                             }).appendTo(oTd);
@@ -74,13 +71,11 @@ $(function(){
                         }
                         
                         if(Trackinfo.trackstate*1 != 20 ){
-                            
-                        $("<input type='button' value='报工'>").click(function(){
+//                    class='btn btn-primary' data-toggle='modal' data-target='#myModal
+                    $(" <input type='button' value='报工'  class='btn btn-primary' data-toggle='modal' data-target='#myModal'>").click(function(){
                                                         
                         var workid=$(this).parent().parent().find("td:eq(2)" ).html();   
-                            
-                            $("#adddaywork").show();
-
+//                            $("#myModal").show();
                             $("#checkwork").click(function(){
                                 var count=  $("#newdayworkcount").val();
                                 var quacount=$("#newquacount").val();
@@ -91,34 +86,39 @@ $(function(){
                                 $.post("/platform/adddaiwork","workid="+workid+"&workingCount="+count+"&quaCount="+quacount+"&sttime="+sttime+"&entime="+entime,function(data){
                                        alert("进来了吗"); 
                                        if(data=="true"){
-                                           $("#adddaywork").hide();
-                                           $("#searchtrackbtn").click();
+                                           $("#buttondown").click();
                                            $("#newquacount").val(0);
                                            $("#newdayworkcount").val(0);
+                                           $("#newsttime").val();
+                                           $("#newentime").val();
+                                           $("#searchtrackbtn").click();
                                        }
                                        else{
                                            alert("完成报工失败")
                                        }
+                                    return ;
                                    },"text");
                               });  
+                        
                          }).appendTo(oTd);
                         
                         }
                         
-                        $("<input type='button' value='删除'>").click(function(){
+                    $("<input type='button'value='删除'class='btn btn-primary' data-toggle='modal'>").click(function(){
                             
                            var isok =confirm("删除确认？");
                            if(isok){
                                //this表示当前点击的按钮
                               var id = $(this).parent().parent().find("td:eq(1)").html();
                               "userid是函数变量"
-                               $.post("/mavendemo/deluser","id="+id,function(data){
+                               $.post("/platform/deltrack","id="+id,function(data){
                                    if(data=="true"){
                                        $("#searchtrackbtn").click();
                                    }
                                    else{
                                        alert("删除失败")
                                    }
+                                   return ;
                                },"text");
                            }
                         }).appendTo(oTd);
@@ -210,10 +210,6 @@ $(function(){
         $("#trackdiv").hide();
         $("#trackpagectrl").hide();
        
-        $("#work").hide();
-        $("#workcondition").hide();
-        $("#workdiv").hide();
-        $("#workpagectrl").hide();
     });
                                  
      $("#searchdayworkbtn").click(function(){
@@ -242,8 +238,8 @@ $(function(){
                         $("<td></td>").html(i+1+( pagenum*1-1)*pagesize).appendTo(oTr);
                         $("<td></td>").html(Daywork.workid).appendTo(oTr);
                         $("<td></td>").html(Daywork.eqid).appendTo(oTr);
-                        $("<td></td>").html(new Date(Daywork.sttime).format("yyyy-MM-dd hh:mm:ss")).appendTo(oTr);
-                        $("<td></td>").html(new Date(Daywork.entime).format("yyyy-MM-dd hh:mm:ss")).appendTo(oTr);
+                        $("<td></td>").html(new Date(Daywork.sttime).format("yyyy-MM-dd")).appendTo(oTr);
+                        $("<td></td>").html(new Date(Daywork.entime).format("yyyy-MM-dd")).appendTo(oTr);
                         $("<td></td>").html(Daywork.workingCount).appendTo(oTr);
                         $("<td></td>").html(Daywork.quaCount).appendTo(oTr);
                         $("<td></td>").html(Daywork.unquaCount).appendTo(oTr);
@@ -325,148 +321,3 @@ $(function(){
     
 });
 
-
-//work
-$(function(){
-    
-    $("#searchwork").click(function(){
-        $("#work").show();
-        $("#workcondition").show();
-        
-        
-               
-        $("#track").hide();
-        $("#trackcondition").hide();
-        $("#trackdiv").hide();
-        $("#trackpagectrl").hide();
-       
-        $("#daywork").hide();
-        $("#dayworkcondition").hide();
-        $("#dayworkdiv").hide();
-        $("#dayworkpagectrl").hide();
-    });
-    
-       
-                                 
-    $("#searchworkbtn").click(function(){
-
-            $.post("/platform/searchall",$("[name]").serialize(),function(data){
-                var pagenum  = $("#workpageNum").val();
-                var pagesize = $("#workpageSize").val();
-                alert("进来了吗");
-                if(data && data.size>0){
-                    
-                    $("#worktotal").html(data.total);
-                    $("#workpages").html(data.pages);
-                    $("#workcurpage").html(data.pageNum);
-                    
-                    $("#worktable tr:gt(0)").remove();
-                    
-                    for(var i=0;i<data.list.length;i++){
-                        
-                        var workinfo = data.list[i];
-                        
-                        var oTr = $("<tr></tr>");
-                        
-                        $("<td></td>").html(i+1+( pagenum*1-1)*pagesize).appendTo(oTr);
-                        $("<td></td>").html(workinfo.workid).appendTo(oTr);
-                        $("<td></td>").html(workinfo.workcount).appendTo(oTr);
-                        $("<td></td>").html(workinfo.eqid).appendTo(oTr);
-                        $("<td></td>").html(workinfo.planid).appendTo(oTr);
-                        $("<td></td>").html(workinfo.proid).appendTo(oTr);
-                        if(workinfo.workstate*1 == 10)   {$("<td></td>").html("未开始").appendTo(oTr);}
-                        else if(workinfo.workstate*1==20){$("<td></td>").html("进行中").appendTo(oTr);}
-                        else if(workinfo.workstate*1==30){$("<td></td>").html("已完成").appendTo(oTr);}
-                        
-                        var oTd =$("<td></td>").appendTo(oTr);
-                            
-                        if(workinfo.workstate * 1  == 10 ){
-
-                            $("<input type='button' value='添加报工'>").click(function(){
-
-                               var isok =confirm("确认添加");
-                               if(isok){
-                                   //this表示当前点击的按钮
-                                  var workid = $(this).parent().parent().find("td:eq(1)").html();
-
-                                   $.post("/platform/dotrack","workid="+workid,function(data){
-                                       if(data=="true"){
-                                           $("#msg").show().css("color","red").html("添加报工成功").fadeOut(3000);
-                                           $("#searchworkbtn").click();
-                                       }
-                                       else{
-                                           alert("添加失败")
-                                       }
-                                   },"text");
-                               }
-                            }).appendTo(oTd);
-
-                        }
-                    oTr.appendTo("#worktable");
-            
-                    }
-                    $("#workdiv").show();
-                    $("#workpagectrl").show();
-                    //布尔型
-                    if(data.isFirstPage){
-                        //当前是第一页
-                        $("#workprePage").hide();
-                        $("#workprePageSpan").show();
-                    }else{
-                        $("#workprePage").show();
-                        $("#workprePageSpan").hide();
-                    }
-
-                    if(data.isLastPage){
-                        $("#worknextPage").hide();
-                        $("#worknextPageSpan").show();
-
-                    }
-                    else{
-                        $("#worknextPage").show();
-                        $("#worknextPageSpan").hide();
-                    }
-                }
-                else{
-                    $("#workdiv").hide();
-                    $("#workpagectrl").hide();
-                    alert("没有查到数据");
-                }
-            },"json");
-    });
-    
-    
-    $("#workprePage").click(function(){
-        var pageNum=$("#workpageNum").val();
-        
-        $("#workpageNum").val(pageNum-1);
-        
-        $("#searchworkbtn").click();
-    });
-    
-    $("#worknextPage").click(function(){
-        var pageNum=$("#workpageNum").val();
-         
-        $("#workpageNum").val(pageNum*1+1);
-         
-        $("#searchworkbtn").click();
-    });
-    
-    $("#workgoBtn").click(function(){
-        var gopage=$("#workgopage").val();
-        
-            if(gopage < 1){
-                gopage = 1;
-            }
-            //页码大于最后一页
-            var pages = $("#workpages").html();
-            //乘一转化为数据
-            if(gopage > pages*1 ){
-                gopage = pages;
-            }      
-            //将页面上用户隐藏的pageNum设定为gopage
-            $("#workpageNum").val(gopage);
-            
-            $("#searchworkbtn").click();
-    });
-});

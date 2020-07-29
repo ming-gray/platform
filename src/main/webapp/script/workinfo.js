@@ -2,6 +2,7 @@
 
 
 $(function () {
+    
     $("#searchBtnShow").click(function () {
         $("#pageNum").val(1);
         $("#searchBtn").click();
@@ -9,6 +10,7 @@ $(function () {
 
     $("#searchBtn").click(function () {
         $.post("/platform/searchall", $("[name]").serialize(), function (data) {
+            
             if (data && data.size > 0) {
                 $("#total").html(data.total);
                 $("#pages").html(data.pages);
@@ -137,13 +139,18 @@ $(function () {
         $("#searchBtn").click();
     });
     
-    /*window.onload = function() {
+    
+    
+});
+
+
+$(function() {
     var from = sessionStorage.getItem("from");
     if(from == 'pageA') {
         //要触发的点击事件  $('#xxx').click()
-        $("#searchBtn").click();
+        $("#pageNum").val(100);
+        $('#searchBtn').click();
+        
         sessionStorage.setItem("from",""); //销毁 from 防止在b页面刷新 依然触发$('#xxx').click()
     }
-}*/
-    
 });

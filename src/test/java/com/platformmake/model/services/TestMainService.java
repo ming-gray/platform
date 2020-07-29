@@ -17,4 +17,14 @@ public class TestMainService {
 	public void testStatisticEq() {
 		System.out.println(service.statisticEq());
 	}
+	
+	@Test
+	public void testStatisticOrdstate() {
+		System.out.println(service.statisticOrdstate());
+	}
+	
+	@Test
+	public void teststatisticOrderByMonth() {
+		System.out.println(service.statisticOrderByMonth());
+	}
 }
