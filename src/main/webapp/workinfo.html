@@ -17,6 +17,7 @@
       <script src="https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js"></script>
     <![endif]-->
+    
 </head>
 
 <body>
@@ -32,9 +33,9 @@
 
 
     <input type="hidden" name="pageNum" value="1" id="pageNum">
-    <input type="hidden" name="pageSize" value="3">
+    <input type="hidden" name="pageSize" value="3" id="pageSize">
 
-    <nav class="navbar navbar-default">
+ <nav class="navbar navbar-default">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -48,15 +49,7 @@
                     <img alt="Brand" src="img/user.png">
                 </a>
             </div>
-            <p class="navbar-text">生产调度模块</p>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <form class="navbar-form navbar-left">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="请输入">
-                    </div>
-                    <button type="submit" class="btn btn-default">搜索</button>
-                </form>
+            <p class="navbar-text">生产调度管理</p>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="#">登录</a></li>
                     <li class="dropdown">
@@ -70,10 +63,20 @@
                         </ul>
                     </li>
                 </ul>
-            </div><!-- /.navbar-collapse -->
+            <!-- Collect the nav links, forms, and other content for toggling -->
         </div><!-- /.container-fluid -->
+         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <form class="navbar-form navbar-left">
+                    <a class="btn btn-default" href="platformmain.html" role="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>首页</a>
+                    <a class="btn btn-default" href="product.html" role="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>产品管理</a>
+                    <a class="btn btn-default" href="seaequip.html" role="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>设备管理</a>
+                    <a class="btn btn-default" href="orderinfo.html" role="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>生产订单管理</a>
+                    <a class="btn btn-default" href="plan.html" role="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>生产计划管理</a>
+                    <a class="btn btn-default" href="workinfo.html" role="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>生产调度管理</a>
+                    <a class="btn btn-default" href="Trackmain.html" role="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>生产跟踪管理</a>
+                </form>
+            </div><!-- /.navbar-collapse --> 
     </nav>
-
 
     <div id="condition">
         计划编号： <input type="text" name="planid">
@@ -89,7 +92,7 @@
     <div id="resultdiv">
         <table class="table table-bordered" id="resulttable">
             <tr>
-                <th>工单编号</th>
+                <th>序号</th>
                 <th>计划编号</th>
                 <th>设备编号</th>
                 <th>产品</th>

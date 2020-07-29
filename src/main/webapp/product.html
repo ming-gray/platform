@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-<title>生产计划模块</title>
 <link rel="stylesheet" href="style/bootstrap.css">
 <link href="style/bootstrap.min.css" rel="stylesheet">
 <link href="style/bootstrap-select.min.css" rel="stylesheet">
@@ -14,12 +14,16 @@
 <script src="script/bootstrap.min.js"></script>
 <script src="script/bootstrap-select.js"></script>
 
-<script src="script/plan.js"></script>
-<link rel="stylesheet" href="style/plan.css">
+
+<link rel="stylesheet" href="style/product.css">
+<title>产品管理</title>
+
+<script src="script/jquery-3.3.1.min.js"></script>
+<script src="script/product.js"></script>
 </head>
 <body>
-
-  <nav class="navbar navbar-default">
+ 
+<nav class="navbar navbar-default">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -33,7 +37,7 @@
                     <img alt="Brand" src="img/user.png">
                 </a>
             </div>
-            <p class="navbar-text">生产计划管理</p>
+            <p class="navbar-text">产品管理</p>
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="#">登录</a></li>
                     <li class="dropdown">
@@ -61,47 +65,28 @@
                 </form>
             </div><!-- /.navbar-collapse --> 
     </nav>
-
-
-
-
-欢迎您，admin
+ 
+ 
+ 
+  欢迎您，admin
    <!-- 隐藏分页信息 -->
    <input type="hidden" name="pageNum" value="1" id="pageNum">
    <input type="hidden" name="pageSize" value="3">
    
    <div id="search">
-        计划编号：<select name="planid" id="selplan">
-          <option value="">==请选择==</option>
-     </select>
-        订单编号：<select name="ordid" id="selordid" >
-         <option value="">==请选择==</option>
-     </select><br>
-        产品编号：<select name="proid" id="selproid" >
-         <option value="">==请选择==</option>
-     </select><br>
-        计划状态：<select name="planstate" id="selpstate" >
-         <option value="">==请选择==</option>
-          <option value="10">未启动</option>
-          <option value="20">已启动</option>
-     </select><br>
+       产品名称：<input type="text" name="proname">
 	<input type="button" value="查询"  id="searchBtnShow">
     <input type="button" value="隐藏查询"  id="searchBtn"  style="VISIBILITY: hidden">
-    <input type="button" value="新建计划"  id="addBtn">
+    <input type="button" value="添加产品"  id="addBtn">
    </div>
    
    <div id="resultdiv">
        <table id="resulttable">
          <tr>
            <th>序号</th>
-           <th>计划编号</th>
-           <th>订单编号</th>
            <th>产品编号</th>
-           <th>数量</th>
-           <th>交货日期</th>
-           <th>计划开始日期</th>
-           <th>计划结束日期</th>    
-           <th>计划状态</th>
+           <th>产品图片</th>
+           <th>产品名称</th>
            <th>操作</th>
          </tr>
        </table>

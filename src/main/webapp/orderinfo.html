@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+<title>生产订单模块</title>
+<link rel="stylesheet" href="style/bootstrap.css">
+<link href="style/bootstrap.min.css" rel="stylesheet">
+<link href="style/bootstrap-select.min.css" rel="stylesheet">
+<script type="text/javascript" src="script/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="script/koala-1.1.1.js"></script>
+<script src="script/bootstrap.min.js"></script>
+<script src="script/bootstrap-select.js"></script>
+
+<link rel="stylesheet" href="style/orderinfo.css">
+<script src="script/jquery-3.3.1.min.js"></script>
+<script src="script/orderinfo.js"></script>
+<script src="script/koala-1.1.1.js"></script>
+</head>
+<body>
+
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="javascript:void(0)">
+                    <img alt="Brand" src="img/user.png">
+                </a>
+            </div>
+            <p class="navbar-text">生产订单管理</p>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">登录</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">更多 <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="javascript:void(0)">个人中心</a></li>
+                            <li><a href="javascript:void(0)">工厂管理</a></li>
+                            <li><a href="javascript:void(0)">意见反馈</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="javascript:void(0)">设置</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+        </div><!-- /.container-fluid -->
+         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <form class="navbar-form navbar-left">
+                    <a class="btn btn-default" href="platformmain.html" role="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>首页</a>
+                    <a class="btn btn-default" href="product.html" role="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>产品管理</a>
+                    <a class="btn btn-default" href="seaequip.html" role="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>设备管理</a>
+                    <a class="btn btn-default" href="orderinfo.html" role="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>生产订单管理</a>
+                    <a class="btn btn-default" href="plan.html" role="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>生产计划管理</a>
+                    <a class="btn btn-default" href="workinfo.html" role="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>生产调度管理</a>
+                    <a class="btn btn-default" href="Trackmain.html" role="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>生产跟踪管理</a>
+                </form>
+            </div><!-- /.navbar-collapse --> 
+    </nav>
+   
+  	<input type="hidden" name="pageNum" value="1" id="pageNum">
+  	<input type="hidden" name="pageSize" value="3">
+  	
+  	<div id="condition">
+		订单编号:<input type="number" min="0" onkeyup="this.value=this.value.replace(/\D/g,'')" name="ordid">
+		产品：<!-- <input type="number" min="0" onkeyup="this.value=this.value.replace(/\D/g,'')" name="proid"> -->
+			<select name="proid" id="selproid">
+   			<option value="">==请选择==</option>
+    		</select><br>
+                      计划状态： <select name="ordstate" id="selordstate">
+   		 		<option value="">==请选择==</option>
+   		 		<option value="10">未接单</option>
+   		 		<option value="20">已接单</option>
+   		 		<option value="30">已拒单</option>
+   		 		<option value="40">生产中</option>
+   		 		<option value="50">已完成</option>
+   				</select> 
+   		<input type="button" value="隐藏查询"  id="searchBtn">
+		<input type="button" value="查询"  id="searchBtnShow">
+		<input type="button" value="新建"  id="addordBtn">
+	</div>
+	<!-- 查询框 -->
+	<div id="resultdiv">
+		<table id="resulttable">
+			<tr>
+				<th>订单编号</th>
+				<th>订单来源</th>
+				<th>产品编号</th>
+				<th>产品数量</th>
+				<th>截止日期</th>
+				<th>订单状态</th>
+				<th>已完成数量</th>
+				<th>工厂产能</th>
+				<th>操作</th>
+			</tr>
+		</table>
+	</div>
+	<div id="pagectrl">
+		共<span id="total"></span> 	条&nbsp;&nbsp;
+		共<span id="pages"></span>	页&nbsp;&nbsp;
+		第<span id="curpage"></span>	页
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp;&nbsp;&nbsp; 
+		<a href="javascript:void(0)" id="prePage">上一页</a><span id="prePageSpan">上一页</span>
+		<input type="range" value="1" min="1" id="goRange"><input type="gopage" readonly id="gopage" min="1"><a href="javascript:void(0)" id="goBtn">Go</a>
+		<a href="javascript:void(0)" id="nextPage">下一页</a><span id="nextPageSpan">下一页</span>
+	</div>
+	<!-- 新增框 -->	
+	<div id="adddiv">
+		订单编号:<input type="number" min="0" onkeyup="this.value=this.value.replace(/\D/g,'')" name="ordid" id=ordid><br>
+		产品来源：<input type="text" name="ordsource" id=ordsource><br>
+		产品:<!-- <input type="number" min="0" onkeyup="this.value=this.value.replace(/\D/g,'')" name="proid" id=proid><br> -->
+    			<select name="proid" id="proid">
+   				<option value="0">==请选择==</option>
+    			</select><br>
+		产品数量：<input type="number" min="0" onkeyup="this.value=this.value.replace(/\D/g,'')" name="proordnum" id=proordnum><br>
+		截止日期：<input type="date" name="orddl" id=orddl><br>
+                     <!--  订单状态： <select name="ordstate" id="ordstate">
+   		 		<option value="10">未接单</option>  
+   		 		</select><br>    
+   		已完成数量：<select name="quacom" id="quacom">
+   		 		<option value="0">0</option> 
+   		 		</select><br>
+   		工厂产能：<input type="number" value="0" name="apc" id=apc><br>    -->          
+                      订单状态： <a name="ordstate" value="10" id="ordstate">未接单</a><br>    
+   		已完成数量：<a name="quacom" value="0" id="quacom">0</a><br>
+   		工厂产能 :<a name="apc" value="0" id="apc">0</a><br>
+	</div>
+</body>
+</html>

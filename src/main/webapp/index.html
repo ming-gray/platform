@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>ECharts</title>
+    <!-- 引入 echarts.js -->
+    <script src="script/echarts.min.js"></script>
+</head>
+
+<body>
+    
+        <div>
+            <span style="font-size:20px;width: 40%;display: inline-block">设备运行情况</span>
+        </div>
+        <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+        <div id="echarts3" style="width: 800px;height:450px;"></div>
+        <div id="main" style="width: 600px;height:400px;"></div>
+        <div id="echarts2" style="width: 600px;height:300px;"></div>
+
+        <script type="text/javascript">
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('main'));
+
+            // 指定图表的配置项和数据
+            var option = {
+                title: {
+                    text: '年度订单情况汇总'
+                },
+                tooltip: {},
+                legend: {
+                    data: ['订单数量']
+                },
+                xAxis: {
+                    data: ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"]
+                },
+                yAxis: {},
+                series: [{
+                    name: '订单数量',
+                    type: 'bar',
+                    data: [5, 20, 36, 10, 10, 20, 5, 20, 36, 10, 10, 20]
+                }]
+            };
+
+
+            // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
+
+        </script>
+        <script type="text/javascript">
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('echarts2'));
+
+            // 指定图表的配置项和数据
+            var option = {
+                tooltip: {
+                    trigger: 'item',
+                    formatter: '{a} <br/>{b}: {c} ({d}%)'
+                },
+                legend: {
+                    orient: 'vertical',
+                    left: 10,
+                    data: ['待接单', '已接单', '生产中', '已排产', '已完成']
+                },
+                series: [{
+                    name: '订单信息',
+                    type: 'pie',
+                    radius: ['50%', '70%'],
+                    avoidLabelOverlap: false,
+                    label: {
+                        show: false,
+                        position: 'center'
+                    },
+                    emphasis: {
+                        label: {
+                            show: true,
+                            fontSize: '30',
+                            fontWeight: 'bold'
+                        }
+                    },
+                    labelLine: {
+                        show: false
+                    },
+                    data: [{
+                            value: 335,
+                            name: '待接单'
+                        },
+                        {
+                            value: 310,
+                            name: '已接单'
+                        },
+                        {
+                            value: 234,
+                            name: '生产中'
+                        },
+                        {
+                            value: 135,
+                            name: '已排产'
+                        },
+                        {
+                            value: 1548,
+                            name: '已完成'
+                        }
+                    ]
+                }]
+            };
+
+
+            // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
+
+        </script>
+
+        <script type="text/javascript">
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('echarts3'));
+
+            // 指定图表的配置项和数据
+            var data = [{
+                name: '开机率',
+                value: 54
+            }, {
+                name: '故障率',
+                value: 44
+            }, {
+                name: '运行率',
+                value: 35
+            }, {
+                name: '综合效率',
+                value: 20
+            }]
+
+            var titleArr = [],
+                seriesArr = [];
+            colors = [
+                ['#389af4', '#dfeaff'],
+                ['#ff8c37', '#ffdcc3'],
+                ['#ffc257', '#ffedcc'],
+                ['#a181fc', '#e3d9fe']
+            ]
+            data.forEach(function(item, index) {
+                titleArr.push({
+                    text: item.name,
+                    left: index * 20 + 10 + '%',
+                    top: '65%',
+                    textAlign: 'center',
+                    textStyle: {
+                        fontWeight: 'normal',
+                        fontSize: '16',
+                        color: colors[index][0],
+                        textAlign: 'center',
+                    },
+                });
+                seriesArr.push({
+                    name: item.name,
+                    type: 'pie',
+                    clockWise: false,
+                    radius: [60, 70],
+                    itemStyle: {
+                        normal: {
+                            color: colors[index][0],
+                            shadowColor: colors[index][0],
+                            shadowBlur: 0,
+                            label: {
+                                show: false
+                            },
+                            labelLine: {
+                                show: false
+                            },
+                        }
+                    },
+                    hoverAnimation: false,
+                    center: [index * 20 + 10 + '%', '50%'],
+                    data: [{
+                        value: item.value,
+                        label: {
+                            normal: {
+                                formatter: function(params) {
+                                    return params.value + '%';
+                                },
+                                position: 'center',
+                                show: true,
+                                textStyle: {
+                                    fontSize: '20',
+                                    fontWeight: 'bold',
+                                    color: colors[index][0]
+                                }
+                            }
+                        },
+                    }, {
+                        value: 100 - item.value,
+                        name: 'invisible',
+                        itemStyle: {
+                            normal: {
+                                color: colors[index][1]
+                            },
+                            emphasis: {
+                                color: colors[index][1]
+                            }
+                        }
+                    }]
+                })
+            });
+
+
+            option = {
+                backgroundColor: "#fff",
+                title: titleArr,
+                series: seriesArr
+            }
+
+
+            // 使用刚指定的配置项和数据显示图表。
+            myChart.setOption(option);
+
+        </script>
+
+
+</body>
+
+</html>

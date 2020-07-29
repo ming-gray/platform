@@ -93,4 +93,6 @@ public interface EquipinfoMapper {
      * @mbg.generated Thu Jul 23 15:33:19 CST 2020
      */
     int updateByPrimaryKey(Equipinfo record);
+    
+    int statisticsEq(@Param("eqstate") Integer eqstate);
 }

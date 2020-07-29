@@ -99,4 +99,24 @@ public class Equipinfo {
     public void setEqpic(String eqpic) {
         this.eqpic = eqpic == null ? null : eqpic.trim();
     }
+
+	public Equipinfo() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Equipinfo(Integer eqid, Integer eqstate, String eqpic) {
+		super();
+		this.eqid = eqid;
+		this.eqstate = eqstate;
+		this.eqpic = eqpic;
+	}
+
+	@Override
+	public String toString() {
+		return "Equipinfo [eqid=" + eqid + ", eqstate=" + eqstate + ", eqpic=" + eqpic + "]";
+	}
+    
+    
+    
 }

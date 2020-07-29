@@ -256,12 +256,15 @@
   
   <select id="statisticsEq" resultType="_int">
         SELECT
-			eqstate STATUS,
 			count(*) num 
 		FROM
 			equipinfo 
-		GROUP BY
-			eqstate
+		<where>
+		
+			<if test="eqstate!=null and eqstate!=0">
+	                and eqstate = #{eqstate}
+	        </if>
+		</where>
    </select>
   
 </mapper>

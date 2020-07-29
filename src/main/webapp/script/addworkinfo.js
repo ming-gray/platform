@@ -3,7 +3,10 @@ $(function () {
         if (data) {
             for (var i = 0; i < data.length; i++) {
                 var planinfo = data[i];
-                $("<option></option>").html(planinfo.planid).val(planinfo.planid).appendTo("#selplan");
+                if(planinfo.planstate == 20){
+                    $("<option></option>").html(planinfo.planid).val(planinfo.planid).appendTo("#selplan");
+                }
+                
             }
         }
     }, "json");
