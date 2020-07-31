@@ -1,4 +1,4 @@
 # platform
 Platform
-#技术
+# platform
 SSM、MySQL、jQuery、bootstrap、echarts
