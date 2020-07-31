@@ -1,5 +1,5 @@
 /**
- * 订单管理模块
+ * 璁㈠崟绠＄悊妯″潡
  */
 package com.platformmake.model.services;
 
@@ -48,42 +48,63 @@ public class OrderService {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date times;
 	/**
-	 * 查下拉框
+	 * 转成生产计划
+	 * @param plan
+	 * @return
+	 */
+	public boolean turnToPlan(Planinfo plan) {
+		Orderinfo ord = orderMapper.selectByPrimaryKey(plan.getOrdid());
+		//订单已接单
+		if(ord.getOrdstate()==20) {
+			plan.setPlanstate(10);
+			plan.setOrdid(ord.getOrdid());
+			plan.setPlancount(ord.getProordnum());
+			plan.setProid(ord.getProid());
+			pla.insert(plan);
+			//新建计划后，将订单状态改为生产中
+			ord.setOrdstate(40);
+			orderMapper.updateByPrimaryKeySelective(ord);
+			return true;
+		}
+			return false;
+	}
+	/**
+	 * 鏌ヤ笅鎷夋
 	 * @return
 	 */
 	public List<Productinfo> searchAllPro() {
 		return pro.selectByExample(null);
 	}
 	/**
-	 * 新建订单
+	 * 鏂板缓璁㈠崟
 	 * 
 	 */
 	public boolean addOrder(Orderinfo ord) {
-		//判断产品名是否合法
+		//鍒ゆ柇浜у搧鍚嶆槸鍚﹀悎娉�
 		ProductinfoExample example = new ProductinfoExample();
 		com.platformmake.model.entity.ProductinfoExample.Criteria cc = example.createCriteria();
-		//如果不存在相同名称的产品则不合法，无法新建订单
+		//濡傛灉涓嶅瓨鍦ㄧ浉鍚屽悕绉扮殑浜у搧鍒欎笉鍚堟硶锛屾棤娉曟柊寤鸿鍗�
 		cc.andProidEqualTo(ord.getProid());
 		
 		List<Productinfo> list=pro.selectByExample(example);
 		if(list.size()>0) {
-			//产品名合法
+			//浜у搧鍚嶅悎娉�
 			orderMapper.insert(ord);
 			ord.setOrdstate(10);
 			return true;
 		}else {
-			//产品名不合法
+			//浜у搧鍚嶄笉鍚堟硶
 			return false;
 		}
 	}
 	/**
-	 * 接受订单
+	 * 鎺ュ彈璁㈠崟
 	 * 
 	 */
 	public boolean acceptOrder(Orderinfo ord){
-		//计算工厂产能
-		//计算时间差
-		SimpleDateFormat days = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		//璁＄畻宸ュ巶浜ц兘
+		//璁＄畻鏃堕棿宸�
+		SimpleDateFormat days = new SimpleDateFormat("yyyy-MM-dd");
 		String time_1= days.format(ord.getOrddl());
 		String time_2 = days.format(new Date());
 		Date begin = null;
@@ -100,9 +121,26 @@ public class OrderService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		long  timebreak=(end.getTime()-begin.getTime())/1000;//除以1000是为了转换成秒 
+		times =new Date();
+		int timebreak=0;
+		int timebreaks_m = ord.getOrddl().getMonth()-times.getMonth();
+		int timebreaks_d=ord.getOrddl().getDate()-new Date().getDate();
+		if(timebreaks_m==0) {
+			timebreak =(int)(timebreaks_m*30+timebreaks_d);
+		}else{
+			//if(timebreaks_d>0) {
+				timebreak =(int)(timebreaks_m*30+timebreaks_d);
+			//}else {
+				//timebreak =(int)((timebreaks_m+1)*30+timebreaks_d);
+			//}
+		}
+		System.out.println(ord.getOrddl());
+		System.out.println(times);
+		System.out.println(timebreaks_m);
+		System.out.println(timebreaks_d );
+		System.out.println(timebreak);
 		//long days = (ord.getOrddl().getTime() - new Date().getTime() + 1000000)/(60*60*24*1000);
-		//在设备产品表中查询能生产该产品的全部设备的产能
+		//鍦ㄨ澶囦骇鍝佽〃涓煡璇㈣兘鐢熶骇璇ヤ骇鍝佺殑鍏ㄩ儴璁惧鐨勪骇鑳�
 		ConnectExample example = new ConnectExample();
 		Criteria cc = example.createCriteria();
 		cc.andProidEqualTo(ord.getProid());
@@ -121,16 +159,20 @@ public class OrderService {
         	totalapc = (int) (totalapc+timebreak*con.getYield());
         }
         if ( totalapc >= ord.getProordnum()){
-            // 可接单 状态更新为已接单状态
+            // 鍙帴鍗� 鐘舵�佹洿鏂颁负宸叉帴鍗曠姸鎬�
         	ord.setOrdstate(20);
-        	ord.setApc(totalapc); 
-        	//转成生产计划
+        	ord.setApc(totalapc);
+        	orderMapper.updateByPrimaryKey(ord);
+        	//杞垚鐢熶骇璁″垝
             return true;
+		}else {
+			ord.setApc(totalapc);
+        	orderMapper.updateByPrimaryKey(ord);
 		}
 		return false;
 	}
 	/**
-	 * 拒绝订单
+	 * 鎷掔粷璁㈠崟
 	 * @param ord
 	 * @return
 	 */
@@ -143,7 +185,7 @@ public class OrderService {
 		return true;
 	}
 	/**
-	 * 修改订单状态
+	 * 淇敼璁㈠崟鐘舵��
 	 * @param ord
 	 * @return
 	 */
@@ -158,35 +200,38 @@ public class OrderService {
 		return false;
 	}
 	/**
-	 * 完成订单
+	 * 瀹屾垚璁㈠崟
 	 * @param ord
 	 * @return
 	 */
 	public boolean finishOrder(Orderinfo ord){
-		//查询该订单的状态是否为生产中
+		//鏌ヨ璇ヨ鍗曠殑鐘舵�佹槸鍚︿负鐢熶骇涓�
 		if(ord.getOrdstate()==40) {
-			//查询该订单的生产计划状态是否为已完成
+			//鏌ヨ璇ヨ鍗曠殑鐢熶骇璁″垝鐘舵�佹槸鍚︿负宸插畬鎴�
 			PlaninfoExample example = new PlaninfoExample();
 			com.platformmake.model.entity.PlaninfoExample.Criteria cc = example.createCriteria();
 			cc.andOrdidEqualTo(ord.getOrdid());
 			
 			List<Planinfo> plans= pla.selectByExample(example);
 			for(Planinfo pla:plans) {
-				if(pla.getPlanstate()!=40)
+				if(pla.getPlanstate()!=30)
 					return false;
 			}
+			int nums=ord.getProordnum();
+			int num=Math.abs(nums);
 			ord.setOrdstate(50);
+			ord.setQuacom(num);
 			orderMapper.updateByPrimaryKey(ord);
 		}
 		return true;
 	}
 	/**
-	 * 删除订单
+	 * 鍒犻櫎璁㈠崟
 	 * @param ordid
 	 * @return
 	 */
 	public boolean deleteByOrderid(int ordid){
-		//处于已接单和生产中的订单不能删除
+		//澶勪簬宸叉帴鍗曞拰鐢熶骇涓殑璁㈠崟涓嶈兘鍒犻櫎
 		Orderinfo ord=orderMapper.selectByPrimaryKey(ordid);
 		if(ord.getOrdstate()==20 || ord.getOrdstate() == 40)
 			return false;
@@ -194,7 +239,7 @@ public class OrderService {
 			return i>0;
 	}
 	/**
-	 * 修改订单
+	 * 淇敼璁㈠崟
 	 * @param ord
 	 * @return
 	 */
@@ -204,11 +249,11 @@ public class OrderService {
 		cc.andProidEqualTo(ord.getProid());
 		
 		List<Productinfo> list = pro.selectByExample(example);
-		//产品名合法
+		//浜у搧鍚嶅悎娉�
 		if(list.size()>0) {
-			//数量正确
+			//鏁伴噺姝ｇ‘
 			if(ord.getProordnum()>=0&&ord.getQuacom()>=0&&ord.getApc()>=0)
-				//截止时间合理
+				//鎴鏃堕棿鍚堢悊
 			//	if(new Date().before(ord.getOrddl()))
 				//{
 					orderMapper.updateByPrimaryKey(ord);
@@ -218,7 +263,7 @@ public class OrderService {
 		return false;
 	}
 	/**
-	 * 分页查询
+	 * 鍒嗛〉鏌ヨ
 	 * @param ord
 	 * @param pageNum
 	 * @param pageSize
@@ -228,22 +273,22 @@ public class OrderService {
 		OrderinfoExample example = new OrderinfoExample();
 		com.platformmake.model.entity.OrderinfoExample.Criteria cc= example.createCriteria();
 		if(null != ord.getOrdid()) {
-			//添加订单号查询条件
+			//娣诲姞璁㈠崟鍙锋煡璇㈡潯浠�
 			cc.andOrdidEqualTo(ord.getOrdid());
 		}
 		if(null != ord.getProid()) {
-			//添加产品名查询条件
+			//娣诲姞浜у搧鍚嶆煡璇㈡潯浠�
 			cc.andProidEqualTo(ord.getProid());
 		}
 		if(null!= ord.getOrdstate()) {
-			//添加订单状态查询条件
+			//娣诲姞璁㈠崟鐘舵�佹煡璇㈡潯浠�
 			cc.andOrdstateEqualTo(ord.getOrdstate());
 		}
-		//启动分页插件
+		//鍚姩鍒嗛〉鎻掍欢
 		PageHelper.startPage(pageNum,pageSize);
-		//实施查询
+		//瀹炴柦鏌ヨ
 		List<Orderinfo> list =orderMapper.selectByExample(example);
-		//返回值
+		//杩斿洖鍊�
 		return new PageInfo<Orderinfo>(list);
 }
 }

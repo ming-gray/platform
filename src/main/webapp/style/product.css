@@ -1,32 +1,17 @@
-#resulttable{
-    margin: 0px auto;
-    border: 1px black solid;
-    border-collapse: collapse;
-}
-
-#resulttable th,#resulttable td{
-    border: 1px black solid;
-    padding: 10px;
-}
-
-#resulttable th{
-    background-color:blue;
-    color:aliceblue;
-}
-
-#resultdiv{
-    margin-top: 20px;
+#pagectrl {
+    font-size: 1em;
+    text-align: center;
     display: none;
 }
-#pagectrl{
-    font-size:  0.8cm;
-    text-align: center;
-    display:   none;
-}
-#gopage{
-    width: 30px;
+
+#resultdiv {
+    display: none;
 }
 
-#nextPageSpan,#prePageSpan{
+#gopage {
+    width: 40px;
+}
+
+#searchBtn {
     display: none;
 }

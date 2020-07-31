@@ -1,32 +1,69 @@
-#resulttable{
+#equipdiv{
+    margin-top: 20px;
+    display: none;
+}
+#equiptable{
     margin: 0px auto;
     border: 1px black solid;
     border-collapse: collapse;
 }
-
-#resulttable th,#resulttable td{
+#equiptable th,#equiptable td{
     border: 1px black solid;
     padding: 10px;
 }
-
-#resulttable th{
+#equiptable th{
     background-color:blue;
     color:aliceblue;
 }
-
-#resultdiv{
-    margin-top: 20px;
+#equipcondition{
     display: none;
 }
-#pagectrl{
+#equippagectrl{
     font-size:  0.8cm;
     text-align: center;
     display:   none;
 }
-#gopage{
+#equipgopage{
     width: 30px;
 }
+#equipnextPageSpan,#equipprePageSpan{
+    display: none;
+}
 
-#nextPageSpan,#prePageSpan{
+
+
+#condiv{
+    margin-top: 20px;
+    display: none;
+}
+#contable{
+    margin: 0px auto;
+    border: 1px black solid;
+    border-collapse: collapse;
+}
+#contable th,#contable td{
+    border: 1px black solid;
+    padding: 10px;
+}
+#contable th{
+    background-color:blue;
+    color:aliceblue;
+}
+#concondition{
+    display: none;
+}
+#conpagectrl{
+    font-size:  0.8cm;
+    text-align: center;
+    display:   none;
+}
+#congopage{
+    width: 30px;
+}
+#connextPageSpan,#conprePageSpan{
+    display: none;
+}
+
+#addcon{
     display: none;
 }

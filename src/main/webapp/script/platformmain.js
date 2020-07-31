@@ -34,7 +34,7 @@ $(function () {
                 },
                 series: [{
                     // 根据名字对应到相应的系列
-                    name: '销量',
+                    name: '订单数量',
                     data: num
         }]
             });
@@ -103,4 +103,277 @@ $(function () {
         }
     }, "json");
 
+
+});
+
+$(function () {
+    var myChart = echarts.init(document.getElementById('circle1'));
+
+    $.post("/platform/staeq", null, function (data) {
+        if (data) {
+            var runRate = (data.runRate * 100).toFixed(2);
+            myChart.setOption({
+                series: [{
+                    data: [
+                        {
+                            value: runRate,
+                            name: '运行率'
+                    },
+
+                        {
+                            value: 100 - runRate,
+                            name: ''
+                    }
+          ]
+        }]
+            });
+        }
+    }, "json");
+
+
+
+    myChart.setOption({
+        // tooltip: {},
+        title: {
+            text: "运行率",
+            bottom: 0,
+            left: 'center',
+            textStyle: {
+                color: '#389af4',
+            }
+        },
+        tooltip: {
+            trigger: 'item',
+            formatter: " {b}({d}%) "
+        },
+        legend: {
+            orient: 'vertical',
+            x: 'left',
+            show: false
+
+        },
+        color: ["#389af4", "#dfeaff"],
+        series: [
+            {
+                name: '',
+                type: 'pie',
+                radius: ['60%', '70%'],
+                avoidLabelOverlap: true,
+                hoverAnimation: false,
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'center',
+                        formatter: '{d}%',
+                        textStyle: {
+                            fontSize: 32
+                        }
+                    },
+                    emphasis: {
+                        show: false
+                    }
+                },
+                labelLine: {
+                    normal: {
+                        show: false
+                    }
+                },
+                center: ['30%', '50%'],
+                data: [
+                    {
+                        value: 0,
+                        name: ''
+                    },
+                    {
+                        value: 100,
+                        name: ''
+                    }
+          ]
+        }
+
+      ]
+
+    });
+});
+
+$(function () {
+    var myChart = echarts.init(document.getElementById('circle2'));
+
+    $.post("/platform/staeq", null, function (data) {
+        if (data) {
+            var failRate = (data.failRate * 100).toFixed(2);
+            myChart.setOption({
+                series: [{
+                    data: [
+                        {
+                            value: failRate,
+                            name: '故障率'
+                    },
+
+                        {
+                            value: 100 - failRate,
+                            name: ''
+                    }
+          ]
+        }]
+            });
+        }
+    }, "json");
+
+
+
+    myChart.setOption({
+        // tooltip: {},
+        title: {
+            text: "故障率",
+            bottom: 0,
+            left: 'center',
+            textStyle: {
+                color: '#ff8c37',
+            }
+        },
+        tooltip: {
+            trigger: 'item',
+            formatter: " {b}({d}%)"
+        },
+        legend: {
+            orient: 'vertical',
+            x: 'left',
+            show: false
+
+        },
+        color: ["#ff8c37", "#ffdcc3"],
+        series: [
+            {
+                name: '',
+                type: 'pie',
+                radius: ['60%', '70%'],
+                avoidLabelOverlap: true,
+                hoverAnimation: false,
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'center',
+                        formatter: '{d}%',
+                        textStyle: {
+                            fontSize: 32
+                        }
+                    },
+                    emphasis: {
+                        show: false
+                    }
+                },
+                labelLine: {
+                    normal: {
+                        show: false
+                    }
+                },
+                center: ['30%', '50%'],
+                data: [
+                    {
+                        value: 0,
+                        name: ''
+                    },
+                    {
+                        value: 100,
+                        name: ''
+                    }
+          ]
+        }
+
+      ]
+
+    });
+
+
+});
+
+$(function () {
+    var myChart = echarts.init(document.getElementById('circle3'));
+
+    $.post("/platform/staeq", null, function (data) {
+        if (data) {
+            var avaiRate = (data.avaiRate * 100).toFixed(2);
+            myChart.setOption({
+                series: [{
+                    data: [
+                        {
+                            value: avaiRate,
+                            name: '开机率'
+                    },
+
+                        {
+                            value: 100 - avaiRate,
+                            name: ''
+                    }
+          ]
+        }]
+            });
+        }
+    }, "json");
+
+
+
+    myChart.setOption({
+        // tooltip: {},
+        title: {
+            text: "开机率",
+            bottom: 0,
+            left: 'center',
+            textStyle: {
+                color: '#a181fc',
+            }
+        },
+        tooltip: {
+            trigger: 'item',
+            formatter: " {b}({d}%) "
+        },
+        legend: {
+            orient: 'vertical',
+            x: 'left',
+            show: false
+
+        },
+        color: ["#a181fc", "#e3d9fe"],
+        series: [
+            {
+                name: '',
+                type: 'pie',
+                radius: ['60%', '70%'],
+                avoidLabelOverlap: true,
+                hoverAnimation: false,
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'center',
+                        formatter: '{d}%',
+                        textStyle: {
+                            fontSize: 32
+                        }
+                    },
+                    emphasis: {
+                        show: false
+                    }
+                },
+                labelLine: {
+                    normal: {
+                        show: false
+                    }
+                },
+                center: ['30%', '50%'],
+                data: [
+                    {
+                        value: 0,
+                        name: ''
+                    },
+                    {
+                        value: 100,
+                        name: ''
+                    }
+          ]
+        }
+
+      ]
+
+    });
 });

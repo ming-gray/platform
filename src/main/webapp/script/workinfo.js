@@ -52,7 +52,7 @@ $(function () {
                                         alert("删除成功");
                                         $("#searchBtn").click();
                                     } else {
-                                        alert("删除失败，请重试");
+                                        alert("工单记录不足，删除失败");
                                     }
                                 }, "text");
                             }

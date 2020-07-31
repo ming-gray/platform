@@ -12,6 +12,7 @@ import org.springframework.web.context.request.SessionScope;
 
 import com.github.pagehelper.PageInfo;
 import com.platformmake.model.entity.Orderinfo;
+import com.platformmake.model.entity.Planinfo;
 import com.platformmake.model.entity.Productinfo;
 import com.platformmake.model.services.OrderService;
 
@@ -62,4 +63,9 @@ public class OrderServiceController<searchOrder> {
 	public List<Productinfo> doInitProvinces(){
 		return service.searchAllPro();
 	}
+	@RequestMapping("/turntoplan")
+	public boolean doturnToPlan(Planinfo plan){
+		return service.turnToPlan(plan);
+	}
+	
 }

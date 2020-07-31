@@ -13,3 +13,21 @@
     position: relative;
     min-width: 600px;
 }
+.t_left_box{
+     display: inline-block;
+    width: 28rem;
+    height: 3.6rem;
+    position: relative;
+}
+.t_center_box{
+    display: inline-block;
+    width: 28rem;
+    height: 3.6rem;
+    position: relative;
+}
+.t_right_box{
+   display: inline-block;
+    width: 28rem;
+    height: 3.6rem;
+    position: relative;
+}

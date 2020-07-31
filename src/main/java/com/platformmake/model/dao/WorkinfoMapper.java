@@ -94,11 +94,11 @@ public interface WorkinfoMapper {
      */
     int updateByPrimaryKey(Workinfo record);
     
-    int hasRelatedSchedule(int planid);
+    int hasRelatedSchedule(Integer planid);
     
-    int hasRelatedUnfinishedSchedule(int planid);
+    int hasRelatedUnfinishedSchedule(Integer planid);
 
-    int hasFinishedNum(int planid);
+    int hasFinishedNum(Integer planid);
 
-    int getProduceNum(int planid);
+    int getProduceNum(Integer planid);
 }

@@ -1,25 +1,44 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <title>生产跟踪模块</title>
-<link rel="stylesheet" href="style/bootstrap.css">
-<link rel="stylesheet" href="style/Trackmain.css">
-<link href="style/bootstrap.min.css" rel="stylesheet">
-<link href="style/bootstrap-select.min.css" rel="stylesheet">
-<script type="text/javascript" src="script/jquery-3.3.1.min.js"></script>
-<script type="text/javascript" src="script/Trackmain.js"></script>
-<script type="text/javascript" src="script/koala-1.1.1.js"></script>
-<script src="script/bootstrap.min.js"></script>
-<script src="script/bootstrap-select.js"></script>
+    <link rel="stylesheet" href="style/bootstrap.css">
+    <link rel="stylesheet" href="style/Trackmain.css">
+    <link href="style/bootstrap.min.css" rel="stylesheet">
+    <link href="style/bootstrap-select.min.css" rel="stylesheet">
+    <script type="text/javascript" src="script/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="script/Trackmain.js"></script>
+    <script type="text/javascript" src="script/koala-1.1.1.js"></script>
+    <script src="script/bootstrap.min.js"></script>
+    <script src="script/bootstrap-select.js"></script>
+
+   
+    <style type="text/css">
+        /*input css*/
+        .iInput{
+            position: absolute;
+            width: 99px;
+            height: 16px;
+            left: 1px;
+            top: 2px;
+            border-bottom: 0px;
+            border-right: 0px;
+            border-left: 0px;
+            border-top: 0px;
+        }
+        </style>
+
 
 </head>
+
 <body>
-  
-<nav class="navbar navbar-default">
+
+    <nav class="navbar navbar-default">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -34,70 +53,76 @@
                 </a>
             </div>
             <p class="navbar-text">生产跟踪管理</p>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">登录</a></li>
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">更多 <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="javascript:void(0)">个人中心</a></li>
-                            <li><a href="javascript:void(0)">工厂管理</a></li>
-                            <li><a href="javascript:void(0)">意见反馈</a></li>
-                            <li role="separator" class="divider"></li>
-                            <li><a href="javascript:void(0)">设置</a></li>
-                        </ul>
-                    </li>
-                </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">登录</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">更多 <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="javascript:void(0)">个人中心</a></li>
+                        <li><a href="javascript:void(0)">工厂管理</a></li>
+                        <li><a href="javascript:void(0)">意见反馈</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="javascript:void(0)">设置</a></li>
+                    </ul>
+                </li>
+            </ul>
             <!-- Collect the nav links, forms, and other content for toggling -->
         </div><!-- /.container-fluid -->
-         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <form class="navbar-form navbar-left">
-                    <a class="btn btn-default" href="platformmain.html" role="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>首页</a>
-                    <a class="btn btn-default" href="product.html" role="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>产品管理</a>
-                    <a class="btn btn-default" href="seaequip.html" role="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>设备管理</a>
-                    <a class="btn btn-default" href="orderinfo.html" role="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>生产订单管理</a>
-                    <a class="btn btn-default" href="plan.html" role="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>生产计划管理</a>
-                    <a class="btn btn-default" href="workinfo.html" role="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>生产调度管理</a>
-                    <a class="btn btn-default" href="Trackmain.html" role="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>生产跟踪管理</a>
-                </form>
-            </div><!-- /.navbar-collapse --> 
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <form class="navbar-form navbar-left">
+                <a class="btn btn-default" href="platformmain.html" role="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>首页</a>
+                <a class="btn btn-default" href="product.html" role="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>产品管理</a>
+                <a class="btn btn-default" href="seaequip.html" role="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>设备管理</a>
+                <a class="btn btn-default" href="orderinfo.html" role="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>生产订单管理</a>
+                <a class="btn btn-default" href="plan.html" role="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>生产计划管理</a>
+                <a class="btn btn-default" href="workinfo.html" role="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>生产调度管理</a>
+                <a class="btn btn-default" href="Trackmain.html" role="button"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span>生产跟踪管理</a>
+            </form>
+        </div><!-- /.navbar-collapse -->
     </nav>
-  
+
     <div class="snow-container"></div>
-  
-  
-  
-   <div>
-    欢迎您<span id="curname"></span><br>
-<!--    <span type="hidden" id="curid"></span>-->
-    <input type="hidden" id="curid">    
+
+
+
+    <div>
+        欢迎您<span id="curname"></span><br>
+        <!--    <span type="hidden" id="curid"></span>-->
+        <input type="hidden" id="curid">
         <input type="button" value="查询跟踪" id="searchtrack"><br>
-        <input type="button" value="查询报工" id="searchdaywork"><br>       
-   </div>
-   
-    
-   
-   
-   <!--跟踪表表  -->
-<div id="track">
-    <input type="hidden" name="trackpageNum"  value="1" id="trackpageNum">
-    <input type="hidden" name="trackpageSize" value="3" id="trackpageSize">
-    <div id="trackcondition">
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            工单编号:<input type="text" name="workid">&nbsp;
-            计划编号:<input type="text" name="proid">&nbsp;
-            产品编号:<input type="text"  name="planid">&nbsp;
-            工单状态<select name="trackstate" id="selworkstate">
-                <option value="">==请选择==</option>
-                <option value="10">生产中</option>
-                <option value="20">已完成</option>
-            </select><br>
-            <input type="button" value="查询" id="searchtrackbtn"><br>
-            <br><br><br><br>	
+        <input type="button" value="查询报工" id="searchdaywork"><br>
     </div>
-    
-    <div id="trackdiv">
-        <table id="tracktable">
-                 <tr>
+
+
+
+
+    <!--跟踪表表  -->
+    <div id="track">
+        <input type="hidden" name="trackpageNum" value="1" id="trackpageNum">
+        <input type="hidden" name="trackpageSize" value="3" id="trackpageSize">
+        <div id="trackcondition"> 计划编号:
+               <div style="position:relative;left: 10px">
+                <select style="width:120px;" onchange="document.getElementById('input').value=this.value" id="seltrackplan">
+                    <option value="">请选择</option>
+                  </select>
+                 <input id="input" name="proid" class="iInput" >
+            </div>
+<!--            计划编号:<input type="text" name="proid">&nbsp;-->
+                &nbsp;&nbsp;产品编号:<br>
+                &nbsp;<input type="text" name="planid" ><br>
+                &nbsp;工单状态:<br>
+                &nbsp; <select name="trackstate" id="selworkstate">
+                    <option value="">==请选择==</option>
+                    <option value="10">生产中</option>
+                    <option value="20">已完成</option>
+                </select>&nbsp;&nbsp;&nbsp;
+                <input type="button" value="查询" id="searchtrackbtn"><br>
+            
+        </div>
+
+        <div id="trackdiv">
+            <table class="table table-bordered" id="tracktable">
+                <tr>
                     <th>序号</th>
                     <th>编号</th>
                     <th>工单编号</th>
@@ -107,83 +132,74 @@
                     <th>工单数量</th>
                     <th>合格数</th>
                     <th>操作</th>
-                 </tr>
-        </table>
-    </div>
-    <div id="trackpagectrl">
-        共<span id="tracktotal"></span>条 &nbsp;&nbsp;
-        共<span id="trackpages"></span>页 &nbsp;&nbsp;
-        第<span id="trackcurpage"></span>页
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <a href="javascript:void(0)" id="trackprePage">上一页</a> <span id="trackprePageSpan">上一页</span>
-        <input type="number" id="trackgopage" min="1">
-        <a href="javascript:void(0)" id="trackgoBtn" >GO</a>
-        <a href="javascript:void(0)" id="tracknextPage">下一页</a> <span id="tracknextPageSpan">上一页</span>
-    </div>
-    
-<!--
-    <div id="adddaywork">
-        加工数量:   <input type="num"  value="0" name="workingCount" id="newdayworkcount">&nbsp;
-        合格数量:   <input type="num"  value="0" name="quaCont"      id="newquacount">&nbsp;&nbsp;&nbsp;&nbsp;
-        加工开始时间<input type="date"  name="sttime"       id="newsttime">
-        加工结束时间<input type="date"  name="entime"       id="newentime"><br> 
-        &nbsp;&nbsp;&nbsp;&nbsp;
-        <input type="button" value="确认报工" id="checkwork"><br> 
-    </div>
--->
-    
- <div class="container">
-  <!-- 模态框 -->
-  <div class="modal fade" id="myModal">
-    <div class="modal-dialog">
-      <div class="modal-content">
-   
-        <!-- 模态框头部 -->
-        <div class="modal-header">
-          <h4 class="modal-title">输入报工</h4>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </tr>
+            </table>
         </div>
-   
-        <!-- 模态框主体 -->
-        <div class="modal-body">
-            加工数量:   <br><input type="num"  value="0" name="workingCount" id="newdayworkcount"><br><br>
-            合格数量:   <br><input type="num"  value="0" name="quaCont"      id="newquacount"><br><br>
-            加工开始时间<br><input type="date"  name="sttime"       id="newsttime"><br><br>
-            加工结束时间<br><input type="date"  name="entime"       id="newentime"><br> <br>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <input type="button" value="确认报工" id="checkwork"><br> 
+        <div id="trackpagectrl">
+            共<span id="tracktotal"></span>条 &nbsp;&nbsp;
+            共<span id="trackpages"></span>页 &nbsp;&nbsp;
+            第<span id="trackcurpage"></span>页
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="javascript:void(0)" id="trackprePage">上一页</a> <span id="trackprePageSpan">上一页</span>
+            <input type="number" id="trackgopage" min="1">&nbsp;&nbsp;
+            <a href="javascript:void(0)" id="trackgoBtn">GO</a>&nbsp;&nbsp;
+            <a href="javascript:void(0)" id="tracknextPage">下一页</a> <span id="tracknextPageSpan">上一页</span>
         </div>
-   
-        <!-- 模态框底部 -->
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal" id="buttondown">关闭</button>
-        </div>
-   
-      </div>
-    </div>
-  </div>
-  
-</div>
 
- </div>
-   
-<!--   -->
-<div id="daywork">
-    <input type="hidden" name="dayworkpageNum" value="1" id="dayworkpageNum">
-    <input type="hidden" name="dayworkpageSize" value="3" id="dayworkpageSize">
-    <div id="dayworkcondition">
-            工单编号：   <input type="text"  name="workid">&nbsp;
-            设备编号:    <input type="text"  name="eqid"  ><br>
-            报工开始时间:<input type="date"  name="sttime"><br>
-            报工结束时间:<input type="date"  name="entime">&nbsp;&nbsp;&nbsp;&nbsp;
-            <input type="button" value="查询" id="searchdayworkbtn"><br>
-            <br><br><br><br>	
+
+
+        <div class="container">
+            <!-- 模态框 -->
+            <div class="modal fade" id="myModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+
+                        <!-- 模态框头部 -->
+                        <div class="modal-header">
+                            <h4 class="modal-title">输入报工</h4>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+
+                        <!-- 模态框主体 -->
+                        <div class="modal-body">
+                            加工数量: <br><input type="num" value="0" name="workingCount" id="newdayworkcount"><br><br>
+                            合格数量: <br><input type="num" value="0" name="quaCont" id="newquacount"><br><br>
+                            加工开始时间<br><input type="date" name="sttime" id="newsttime"><br><br>
+                            加工结束时间<br><input type="date" name="entime" id="newentime"><br> <br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            <input type="button" value="确认报工" id="checkwork"><br>
+                        </div>
+
+                        <!-- 模态框底部 -->
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" id="buttondown">关闭</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
     </div>
-    
-    <div id="dayworkdiv">
-        <table id="dayworktable">
-                 <tr>
+
+    <!--   -->
+    <div id="daywork">
+        <input type="hidden" name="dayworkpageNum" value="1" id="dayworkpageNum">
+        <input type="hidden" name="dayworkpageSize" value="3" id="dayworkpageSize">
+        <div id="dayworkcondition">
+            工单编号： <input type="text" name="workid">&nbsp;
+            设备编号: <input type="text" name="eqid"><br>
+            报工开始时间:<input type="date" name="sttime"><br>
+            报工结束时间:<input type="date" name="entime">&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="button" value="查询" id="searchdayworkbtn"><br>
+            <br>
+        </div>
+
+        <div id="dayworkdiv">
+            <table id="dayworktable">
+                <tr>
                     <th>序号</th>
                     <th>工单编号</th>
                     <th>设备编号编号</th>
@@ -192,23 +208,24 @@
                     <th>报工数量</th>
                     <th>合格数量</th>
                     <th>不合格数量</th>
-                 </tr>
-        </table>
+                </tr>
+            </table>
+        </div>
+        <div id="dayworkpagectrl">
+            共<span id="dayworktotal"></span>条 &nbsp;&nbsp;
+            共<span id="dayworkpages"></span>页 &nbsp;&nbsp;
+            第<span id="dayworkcurpage"></span>页
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="javascript:void(0)" id="dayworkprePage">上一页</a> <span id="tdayworkprePageSpan">上一页</span>
+            <input type="number" id="dayworkgopage" min="1">
+            <a href="javascript:void(0)" id="dayworkgoBtn">GO</a>
+            <a href="javascript:void(0)" id="dayworknextPage">下一页</a> <span id="dayworknextPageSpan">上一页</span>
+        </div>
+
     </div>
-    <div id="dayworkpagectrl">
-        共<span id="dayworktotal"></span>条 &nbsp;&nbsp;
-        共<span id="dayworkpages"></span>页 &nbsp;&nbsp;
-        第<span id="dayworkcurpage"></span>页
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <a href="javascript:void(0)" id="dayworkprePage">上一页</a> <span id="tdayworkprePageSpan">上一页</span>
-        <input type="number" id="dayworkgopage" min="1">
-        <a href="javascript:void(0)" id="dayworkgoBtn" >GO</a>
-        <a href="javascript:void(0)" id="dayworknextPage">下一页</a> <span id="dayworknextPageSpan">上一页</span>
-    </div>
-     
-</div>   
-   
+
 
 </body>
+
 </html>

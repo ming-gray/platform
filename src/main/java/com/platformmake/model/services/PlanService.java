@@ -10,12 +10,14 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.platformmake.model.dao.OrderinfoMapper;
 import com.platformmake.model.dao.PlaninfoMapper;
+import com.platformmake.model.dao.ProductinfoMapper;
 import com.platformmake.model.dao.WorkinfoMapper;
 import com.platformmake.model.entity.Orderinfo;
 import com.platformmake.model.entity.OrderinfoExample;
 import com.platformmake.model.entity.Planinfo;
 import com.platformmake.model.entity.PlaninfoExample;
 import com.platformmake.model.entity.PlaninfoExample.Criteria;
+import com.platformmake.model.entity.Productinfo;
 import com.platformmake.model.entity.Workinfo;
 
 /**
@@ -27,12 +29,30 @@ import com.platformmake.model.entity.Workinfo;
 public class PlanService {
 
 	@Autowired
+	private ProductinfoMapper productinfoMapper;
+	@Autowired
 	private PlaninfoMapper planinfoMapper;
 	@Autowired
 	private OrderinfoMapper orderinfoMapper;
-	@Autowired
-	private WorkinfoMapper workinfoMapper;
 
+	/**
+	 * 查询所有产品信息
+	 * @return
+	 */
+	public List<Productinfo> searchAllProduct(){
+		return productinfoMapper.selectByExample(null);
+	}
+	/**
+	 * 根据订单编号查询产品数量
+	 * @param pid
+	 * @return
+	 */
+	public List<Orderinfo> searchProordnumByOrdid(int ordid){
+		OrderinfoExample example = new OrderinfoExample();
+		com.platformmake.model.entity.OrderinfoExample.Criteria cc = example.createCriteria();
+		cc.andOrdidEqualTo(ordid);
+		return orderinfoMapper.selectByExample(example);
+	}
 	/**
 	 * 根据订单编号查询产品编号
 	 * @param pid
@@ -51,6 +71,17 @@ public class PlanService {
 	 */
 	public List<Orderinfo> searchAllOrder(){
 		return orderinfoMapper.selectByExample(null);
+	}
+	/**
+	 * 根据订单编号查找计划
+	 * @param ordid
+	 * @return
+	 */
+	public List<Planinfo> searchPlanByOrdid(int ordid){
+		PlaninfoExample example = new PlaninfoExample();
+		Criteria cc = example.createCriteria();
+		cc.andOrdidEqualTo(ordid);
+		return planinfoMapper.selectByExample(example);
 	}
 	/**
 	 * 根据计划编号查询该计划的产品编号
@@ -96,15 +127,13 @@ public class PlanService {
 		Planinfo plan = list.get(0);
 		//修改计划状态为已启动
 		plan.setPlanstate(20);
-		int i= planinfoMapper.updateByPrimaryKey(plan);
-		
-		
+		planinfoMapper.updateByPrimaryKey(plan);
 	//	((Planinfo) plan).setPlanstate(20);
 		//创建新工单
 //		Workinfo work = new Workinfo(0,null,null,0,10,plan.getPlanid(),0,plan.getProid(),null,null);
 	//	int i = workinfoMapper.insert(work);
 	//	return i>0;
-		return i>0;
+		return true;
 	}
 	/**
 	 * 修改未启动的计划
@@ -112,15 +141,11 @@ public class PlanService {
 	 * @return
 	 */
 	public boolean modPlan(Planinfo plan){
-		if(plan.getPlanstate()==10) {
-        //获取要修改的计划
-	//	Planinfo plan1 = planinfoMapper.selectByPrimaryKey(plan.getPlanid());
-		//判断要修改计划的状态
-	//	if(plan1.getPlanstate()==10) {
-			planinfoMapper.updateByPrimaryKeySelective(plan);
+		//if(plan.getPlanstate()==10) {
+		int i=planinfoMapper.updateByPrimaryKey(plan);
 			return true;
-		}
-		   return false;
+	//	}
+		//   return false;
 	}
 	/**
 	 * 删除未启动的计划；若生产中订单只有一个生产计划，则不能删除
@@ -128,33 +153,32 @@ public class PlanService {
 	 * @return
 	 */
 	public boolean delPlan(int planid) {
-		
 		//获取计划id对应的该计划
-		Planinfo plan = planinfoMapper.selectByPrimaryKey(planid);
+		  Planinfo plan = planinfoMapper.selectByPrimaryKey(planid);
 		//未启动的计划，可删除
-		if(plan.getPlanstate()==10) {
-			//获取订单编号对应的订单
+		  if(plan.getPlanstate()==10) {
+		    //获取订单编号对应的订单
 			Orderinfo order = orderinfoMapper.selectByPrimaryKey(plan.getOrdid());
 			//订单不在生产中,可删除
 			if(order.getOrdstate()!=40) {
 				int i = planinfoMapper.deleteByPrimaryKey(planid);
 				return i>0;
-			}else {
-				//生产中订单有几个生产计划
-				PlaninfoExample example = new PlaninfoExample();
-				Criteria cc = example.createCriteria();
-				cc.andOrdidEqualTo(order.getOrdid());
-				List<Planinfo> list = planinfoMapper.selectByExample(example);
-				//大于1个
-				if(list.size()>1) {
-					int i = planinfoMapper.deleteByPrimaryKey(planid);
-					return i>0;
-				}
-		//		return false;
-			}
-		}
-		return false;
+				}else {
+						//生产中订单有几个生产计划
+						PlaninfoExample example = new PlaninfoExample();
+						Criteria cc = example.createCriteria();
+						cc.andOrdidEqualTo(order.getOrdid());
+						List<Planinfo> list = planinfoMapper.selectByExample(example);
+						//大于1个
+						if(list.size()>1) {
+						int i = planinfoMapper.deleteByPrimaryKey(planid);
+						return i>0;
+						}
+	           }
+		  }
+		  return false;
 	}
+	
 	/**
 	 * 生产计划的查询
 	 * @param cond
@@ -199,7 +223,7 @@ public class PlanService {
 	public boolean addPlan(Planinfo plan) {
 		Orderinfo order = orderinfoMapper.selectByPrimaryKey(plan.getOrdid());
 		//订单已接单
-		if(order.getOrdstate()==20) {
+		if(order.getOrdstate()==20 ||order.getOrdstate()==40) {
 			//默认计划未启动
 			plan.setPlanstate(10);
 			planinfoMapper.insert(plan);

@@ -30,7 +30,7 @@ public class MainService {
 			
 			total = em.statisticsEq(0);
 			if (total != 0) {
-				avaiNum = total - em.statisticsEq(20);
+				avaiNum = total - em.statisticsEq(30);
 				runNum = em.statisticsEq(10);
 				failNum = em.statisticsEq(30);	
 				avaiRate = (float) (avaiNum * 1.0 / total);
@@ -53,6 +53,7 @@ public class MainService {
 	public Map<String, List<Object>> statisticOrdstate(){
 		try {
 			List<Map<String,Object>> list = om.statisticOrder();
+			System.out.println(list);
 			Integer[] nums = new Integer[5];
 			Arrays.fill(nums, 0);
 			for (Map<String, Object> map : list) {
@@ -78,6 +79,7 @@ public class MainService {
 	public Map<String, List<Object>> statisticOrderByMonth(){
 		try {
 			List<Map<String, Object>> list = om.statisticOrderByMonth();
+			System.out.println(list);
 			Integer[] nums = new Integer[12];
 	        Arrays.fill(nums, 0);
 	        for (Map<String, Object> map : list) {

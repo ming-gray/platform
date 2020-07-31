@@ -41,6 +41,7 @@ $(function(){
                         else if(Trackinfo.trackstate*1==20){$("<td></td>").html("已完成").appendTo(oTr);}
                         $("<td></td>").html(Trackinfo.workingCount).appendTo(oTr);
                         $("<td></td>").html(Trackinfo.qualifiedCount).appendTo(oTr);
+                        
 
                         
                         var oTd=$("<td></td>").appendTo(oTr);
@@ -69,40 +70,40 @@ $(function(){
                             }).appendTo(oTd);
                         
                         }
-                        
-                        if(Trackinfo.trackstate*1 != 20 ){
+                    if(Trackinfo.trackstate*1 != 20 ){
 //                    class='btn btn-primary' data-toggle='modal' data-target='#myModal
                     $(" <input type='button' value='报工'  class='btn btn-primary' data-toggle='modal' data-target='#myModal'>").click(function(){
-                                                        
+                                                     
                         var workid=$(this).parent().parent().find("td:eq(2)" ).html();   
-//                            $("#myModal").show();
-                            $("#checkwork").click(function(){
-                                var count=  $("#newdayworkcount").val();
-                                var quacount=$("#newquacount").val();
-                                var sttime=$("#newsttime").val();
-                                var entime=$("#newentime").val();
-                                 alert("就这一下"); 
+                        $("#checkwork").click(function(){
+                            var count=  $("#newdayworkcount").val();
+                            var quacount=$("#newquacount").val();
+                            var sttime=$("#newsttime").val();
+                            var entime=$("#newentime").val();
+                             
 //                                "workid="+workid+"&workingCount="+count+"&quaCount="+quacount
-                                $.post("/platform/adddaiwork","workid="+workid+"&workingCount="+count+"&quaCount="+quacount+"&sttime="+sttime+"&entime="+entime,function(data){
-                                       alert("进来了吗"); 
-                                       if(data=="true"){
-                                           $("#buttondown").click();
-                                           $("#newquacount").val(0);
-                                           $("#newdayworkcount").val(0);
-                                           $("#newsttime").val();
-                                           $("#newentime").val();
-                                           $("#searchtrackbtn").click();
-                                       }
-                                       else{
-                                           alert("完成报工失败")
-                                       }
-                                    return ;
-                                   },"text");
-                              });  
+                    $.post("/platform/adddaiwork","workid="+workid+"&workingCount="+count+"&quaCount="+quacount+"&sttime="+sttime+"&entime="+entime,function(data){
+                            
+                            if(data=="true"){
+                                    $("#buttondown").click();
+                                    $("#newquacount").val(0);
+                                    $("#newdayworkcount").val(0);
+                                    $("#newsttime").val();
+                                    $("#newentime").val();
+                                    $("#searchtrackbtn").click();
+                                    $("#checkwork").unbind();
+                                }
+                                else{
+                                        alert("完成报工失败")
+                                    }
+                                return ;
+                                },"text");
+                            });  
                         
+//                            $("#myModal").show();
                          }).appendTo(oTd);
-                        
-                        }
+                            
+                    }
                         
                     $("<input type='button'value='删除'class='btn btn-primary' data-toggle='modal'>").click(function(){
                             
@@ -319,5 +320,18 @@ $(function(){
     
     
     
+});
+
+$(document).ready(function(){
+	$.post("/platform/checktrack",$("[name]").serialize(),function(data){
+		if(data){
+			for(var i=0;i<data.list.length;i++){
+			
+                var Trackinfo = data.list[i];
+				$("<option></option>").html(Trackinfo.planid).val(Trackinfo.planid).appendTo("#seltrackplan"); 
+            }
+		}
+		
+	},"json");
 });
 

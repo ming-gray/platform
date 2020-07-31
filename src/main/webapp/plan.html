@@ -62,10 +62,6 @@
             </div><!-- /.navbar-collapse --> 
     </nav>
 
-
-
-
-欢迎您，admin
    <!-- 隐藏分页信息 -->
    <input type="hidden" name="pageNum" value="1" id="pageNum">
    <input type="hidden" name="pageSize" value="3">
@@ -76,22 +72,27 @@
      </select>
         订单编号：<select name="ordid" id="selordid" >
          <option value="">==请选择==</option>
-     </select><br>
+     </select>
         产品编号：<select name="proid" id="selproid" >
          <option value="">==请选择==</option>
-     </select><br>
-        计划状态：<select name="planstate" id="selpstate" >
+     </select>
+      <!--  计划状态：<select name="planstate" id="selpstate" >
          <option value="">==请选择==</option>
           <option value="10">未启动</option>
           <option value="20">已启动</option>
-     </select><br>
+     </select> --> 
+         计划状态： <select name="planstate" id="selpstate" class="selectpicker show-tick" title="==请选择==" data-live-search=“true” data-size="5">
+            <option data-subtext="未启动">10</option>
+            <option data-subtext="已启动" >20</option>
+            <option data-subtext="已完成" >30</option>
+        </select><br><br>
 	<input type="button" value="查询"  id="searchBtnShow">
     <input type="button" value="隐藏查询"  id="searchBtn"  style="VISIBILITY: hidden">
     <input type="button" value="新建计划"  id="addBtn">
    </div>
    
    <div id="resultdiv">
-       <table id="resulttable">
+       <table class="table table-bordered" id="resulttable">
          <tr>
            <th>序号</th>
            <th>计划编号</th>
@@ -113,9 +114,9 @@
              第<span id="curpage"></span>页
         &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
         &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;     
-       <a href="javascript:void(0)" id="prePage">上一页</a>
+       <a href="javascript:void(0)" id="prePage">上一页</a><span id="prePageSpan">上一页</span>
        <input type="number" id="gopage" min="1"> <a href="javascript:void(0)" id="goBtn">Go</a>
-       <a href="javascript:void(0)" id="nextPage">下一页</a>
+       <a href="javascript:void(0)" id="nextPage">下一页</a><span id="nextPageSpan">下一页</span>
    </div>
 </body>
 </html>

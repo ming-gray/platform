@@ -1,9 +1,14 @@
 package com.platformmake.model.controllers;
 
+import java.io.IOException;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.github.pagehelper.PageInfo;
 import com.platformmake.model.entity.Productinfo;
@@ -26,7 +31,7 @@ public class ProductController {
 	 * @return
 	 */
 	@RequestMapping("/modpro")
-	public boolean doModPro(Productinfo product) {
+	public boolean doModPro(Productinfo product){
 		return service.modProduct(product);
 	}
 	/**

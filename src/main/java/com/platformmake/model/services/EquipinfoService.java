@@ -21,31 +21,42 @@ public class EquipinfoService {
 
 	@Autowired
 	private EquipinfoMapper eqMapper;
+	
 	@Autowired
 	private ConnectMapper coMapper;
 	
+	@Autowired
+	private equip_pro con;
+	
+	
+	
+	
+	
 	/**
-	 * 设备修改
+	 * 增加设备
+	 * @param equ
+	 * @return true 
+	 */
+	 public boolean addEquip() {
+		 
+		 eqMapper.insert(new Equipinfo(0, 20, null) );
+		 
+		 return true; 
+		 
+	}
+	 
+	/**
+	 * 设备修改（更新）
 	 * @param equ
 	 * @return
 	 */
-	public boolean modEquip(Equipinfo equ,Connect con) {
-		EquipinfoExample example = new EquipinfoExample();
-		Criteria cc = example.createCriteria();
+	
+	public boolean modEquip(Equipinfo equ) {
+		int i = eqMapper.updateByPrimaryKeySelective(equ);
 		
-		
-		ConnectExample example1 = new ConnectExample();
-		com.platformmake.model.entity.ConnectExample.Criteria cc2 = example1.createCriteria();
-		/*cc.andEqidEqualTo(equ.getEqid());
-		List<Equipinfo> list = eqMapper.selectByExample(example);
-		if(list.size() > 0) {
-			return false;
-		}
-		*/
-		int i = eqMapper.updateByPrimaryKeySelective(equ), j = coMapper.updateByPrimaryKeySelective(con);
-		
-		return i*j>0;
+		return i>0;
 	}
+	
 	/**
 	 * 删除设备
 	 * @param eqid
@@ -54,8 +65,11 @@ public class EquipinfoService {
 	public boolean delEquip(int eqid) {
 		
 		int num = eqMapper.deleteByPrimaryKey(eqid);
-		int num2 = coMapper.deleteByPrimaryKey(eqid);
-		return (num > 0)&&(num2 > 0);
+		
+		con.delconnectbyeqid(eqid);
+		
+		
+		return true;
 	}
 	
 	/**
@@ -65,116 +79,21 @@ public class EquipinfoService {
 	 * @param pageSize
 	 * @return
 	 */
-	public PageInfo<Equipinfo> searchEquip(Equipinfo cond,Connect con,Integer pageNum,Integer pageSize){
+	public PageInfo<Equipinfo> searchEquip(Equipinfo cond,int pageNum,int pageSize){
 		EquipinfoExample example = new EquipinfoExample();
-		ConnectExample example1 = new ConnectExample();
 		Criteria cc = example.createCriteria();
-		com.platformmake.model.entity.ConnectExample.Criteria cc2 = example1.createCriteria();
 		if(null != cond.getEqid()) {
-			cc.andEqidEqualTo(cond.getEqid());
+			cc.andEqidEqualTo( cond.getEqid() );
 		}
-		if(null != con.getEqid()) {
-			cc2.andEqidEqualTo(con.getEqid());
-		}
-		PageHelper.startPage(pageNum, pageSize);
-		List<Equipinfo> list = eqMapper.selectByExample(example);
-		List<Connect> list2 = coMapper.selectByExample(example1);
-		//把两个list加在一起
-		List list3 = new ArrayList();
-		list3.addAll(list);
-		list3.addAll(list2);
-		
-		return new PageInfo<Equipinfo>(list3);
-	}
-	/**
-	 * 根据产品id查找
-	 * @param cond
-	 * @param con
-	 * @param pageNum
-	 * @param pageSize
-	 * @return
-	 */
-	public PageInfo<Connect> searchEquipByProid(Connect con,Integer pageNum,Integer pageSize){
-		ConnectExample example1 = new ConnectExample();
-		com.platformmake.model.entity.ConnectExample.Criteria cc2 = example1.createCriteria();
-		if(null != con.getProid()) {
-			cc2.andProidEqualTo(con.getProid());
+		if(null!=cond.getEqstate() ) {
+			cc.andEqstateEqualTo( cond.getEqstate() );
 		}
 		PageHelper.startPage(pageNum, pageSize);
-
-		List<Connect> list2 = coMapper.selectByExample(example1);
 		
-		return new PageInfo<Connect>(list2);
-	}
-	/**
-	 * 增加设备
-	 * @param equ
-	 * @return true 
-	 */
-	 public boolean addEquip(Equipinfo equ,Connect con) {
-		EquipinfoExample example = new EquipinfoExample();
-		Criteria cc = example.createCriteria();
-		cc.andEqidEqualTo(equ.getEqid());
 		List<Equipinfo> list = eqMapper.selectByExample(example);
 		
-		ConnectExample example1 = new ConnectExample();
-		com.platformmake.model.entity.ConnectExample.Criteria cc2 = example1.createCriteria();
-		cc2.andEqidEqualTo(con.getId());
-		List<Connect> list2 = coMapper.selectByExample(example1);
-		
-		List list3 = new ArrayList();
-		list3.addAll(list);
-		list3.addAll(list2);
-		
-		if(list3.size() > 0){
-			return false;
-		}
-		eqMapper.insert(equ);
-		coMapper.insert(con);
-		 return true;
-		 /*
-		 * boolean isOK = checkEquipid(.getEqid()); if(!isOK) { return false; } //2.
-		 * 锟斤拷锟叫诧拷锟斤拷锟斤拷锟� eqMapper.insert(equ);
-		 * 
-		 * return true;
-		 */
-		 
+		return new PageInfo<Equipinfo>(list);
 	}
+	
 	 
-	 
-	 
-	/*
-	 * public boolean checkEquipid(String eqid) { //1. 锟斤拷锟斤拷突 EquipinfoExample example
-	 * = new EquipinfoExample();
-	 * com.platformmake.model.entity.EquipinfoExample.Criteria cc =
-	 * example.createCriteria(); //锟斤拷锟斤拷锟斤拷锟斤拷锟斤拷锟� cc.andEquipidEqualTo(equ.getEqid()); List
-	 * <Equipinfo> list = eqMapper.selectByExample(example);
-	 * 
-	 * return list.size() == 0; }
-	 */
-	 
-	 /**
-	  * 锟斤拷证锟斤拷锟斤拷
-	  * @param equ
-	  * @return
-	  */
-	 public Equipinfo checkLogin(Equipinfo equ) {
-		 
-		 EquipinfoExample example = new EquipinfoExample();
-		 Criteria cc = example.createCriteria();
-		 
-		 cc.andEqidEqualTo(equ.getEqid());
-		 cc.andEqstateEqualTo(equ.getEqstate());
-		 
-		 List<Equipinfo> list = eqMapper.selectByExample(example);
-		 
-		 //锟叫讹拷锟斤拷没锟斤拷
-		 if(list.size() > 0) {
-			 return list.get(0);
-		 }
-		 else {
-			return null;
-		 }
-		 		 
-	 }
 }

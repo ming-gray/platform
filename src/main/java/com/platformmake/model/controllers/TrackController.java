@@ -12,7 +12,7 @@ import com.platformmake.model.entity.Workinfo;
 import com.platformmake.model.services.TrackService;
 import com.platformmake.model.services.ProductService;
 
-@RestController//该类下所有方法都添加	@ResponseBody
+@RestController//锟斤拷锟斤拷锟斤拷锟斤拷锟叫凤拷锟斤拷锟斤拷锟斤拷锟?	@ResponseBody
 public class TrackController {
 
 		@Autowired
@@ -22,7 +22,7 @@ public class TrackController {
 		private ProductService product;
 		
 		/**
-		 * 通过
+		 * 通鍒嗛〉鏌ヨ
 		 * @param cond
 		 * @param pageNum
 		 * @param pageSize
@@ -34,7 +34,7 @@ public class TrackController {
 		}
 		
 		/**
-		 * 添加报工
+		 * 娣诲姞璺熻釜
 		 * @param work
 		 * @return
 		 */
@@ -45,7 +45,7 @@ public class TrackController {
 		}
 		
 		/**
-		 * 完成报工
+		 * 瀹屾垚璺熻釜
 		 * @param workid
 		 * @return
 		 */
@@ -54,7 +54,7 @@ public class TrackController {
 			return track.finishTrack(id);
 		}
 		/**
-		 * 删除报工
+		 * 鍒犻櫎璺熻釜
 		 * @param workid
 		 * @return
 		 */
@@ -64,7 +64,7 @@ public class TrackController {
 			
 		}
 		/**
-		 * 修改报工
+		 * 鏇存柊璺熻釜
 		 * @param tra
 		 * @return
 		 */

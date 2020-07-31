@@ -1,5 +1,6 @@
 package com.platformmake.model.services;
 
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,11 +10,13 @@ import com.github.pagehelper.PageInfo;
 import com.platformmake.model.dao.DayWorkMapper;
 import com.platformmake.model.dao.EquipinfoMapper;
 import com.platformmake.model.dao.OrderinfoMapper;
+import com.platformmake.model.dao.PlaninfoMapper;
 import com.platformmake.model.dao.ProductinfoMapper;
 import com.platformmake.model.dao.TrackinfoMapper;
 import com.platformmake.model.dao.WorkinfoMapper;
 import com.platformmake.model.entity.DayWork;
 import com.platformmake.model.entity.DayWorkExample;
+import com.platformmake.model.entity.Orderinfo;
 import com.platformmake.model.entity.Planinfo;
 import com.platformmake.model.entity.Productinfo;
 import com.platformmake.model.entity.Trackinfo;
@@ -40,6 +43,9 @@ public class TrackService {
 	private WorkinfoMapper workmapper;
 	
 	@Autowired
+	private PlaninfoMapper pm;
+	
+	@Autowired
 	private DayWorkMapper daymapper;
 	
 	@Autowired
@@ -47,7 +53,7 @@ public class TrackService {
 	
 	
 	/**
-	 * 主键查询跟踪(测试)
+	 * 按ID查询工单（测试）
 	 * @param id
 	 * @return
 	 */
@@ -55,7 +61,7 @@ public class TrackService {
 		return trackmapper.selectByPrimaryKey(id);
 	}
 	/**
-	 * 查询跟踪(测试)
+	 * 按查询跟踪集，测试
 	 * @param tra
 	 * @return
 	 */
@@ -68,7 +74,7 @@ public class TrackService {
 	}
 	
 	/**
-	 * 通过工单ID查跟踪
+	 * ͨ按ID工单查询
 	 */
 	
 	public Trackinfo searchByWorkid(int workid){
@@ -81,7 +87,7 @@ public class TrackService {
 		return tra;
 	}
 	/**
-	 * 分页查询跟踪
+	 *分页查询
 	 */
 	public PageInfo<Trackinfo> PageSearchtrackInfo(Trackinfo cond,int pageNum,int pageSize){
 		TrackinfoExample example=new TrackinfoExample();
@@ -101,16 +107,16 @@ public class TrackService {
 		if( null!=cond.getTrackstate() ) {
 			cc.andTrackstateEqualTo(cond.getTrackstate());
 		}
-		//启动分页插件
+
 		PageHelper.startPage(pageNum,pageSize);
-		//不要添加任何代码
+
 		List<Trackinfo>list=trackmapper.selectByExample(example);
-		//返回值
+		//����ֵ
 		return new PageInfo<Trackinfo>(list);
 	}
 	
 	/**
-	 * 添加跟踪
+	 *添加报工
 	 * @param tra
 	 * @return
 	 */
@@ -135,7 +141,7 @@ public class TrackService {
 	}
 	
 	/**
-	 * 完成跟踪
+	 * 完成报工
 	 */
 	public boolean finishTrack(int id) {
 		
@@ -153,17 +159,25 @@ public class TrackService {
 		
 		workmapper.updateByPrimaryKey(work);
 		trackmapper.updateByPrimaryKey(tra);
+		if(workmapper.hasRelatedUnfinishedSchedule(work.getPlanid()) == 0) {
+			int finishedNum = workmapper.hasFinishedNum(work.getPlanid());
+			Planinfo planinfo = pm.selectByPrimaryKey(work.getPlanid());
+			if(planinfo.getPlancount() <= finishedNum) {
+				planinfo.setPlanstate(30);
+				planinfo.setPlanentime(new Date());
+				pm.updateByPrimaryKeySelective(planinfo);
+				Orderinfo orderinfo = ordmapper.selectByPrimaryKey(planinfo.getOrdid());
+				orderinfo.setOrdstate(50);
+				ordmapper.updateByPrimaryKeySelective(orderinfo);				
+			}		
+		}
 		
-		
-//		将完成的功能删除（看情况）
-//		trackmapper.deleteByPrimaryKey(id);
-//		dayworkservice.delectDaiwork(workid);
 		return true;
 		
 	}
 	
 	/**
-	 * 修改跟踪
+	 * 更新报工
 	 */
 	public boolean updataTrack(Trackinfo tra) {
 		
@@ -178,7 +192,7 @@ public class TrackService {
 		
 	}
 	/**
-	 * 删除跟踪
+	 * 删除报工
 	 */
 	public boolean delectTrack(int id) {
 		Trackinfo tra=trackmapper.selectByPrimaryKey(id);

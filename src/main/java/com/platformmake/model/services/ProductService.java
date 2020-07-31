@@ -1,9 +1,14 @@
 package com.platformmake.model.services;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -35,7 +40,7 @@ public class ProductService {
 	 * @param product
 	 * @return true 修改成功
 	 */
-	 public boolean modProduct(Productinfo product) {
+	 public boolean modProduct(Productinfo product){
 		 boolean list = checkProname(product.getProname());
 		 //不重名时
 		 if(list) {
@@ -92,14 +97,16 @@ public class ProductService {
 	 * 添加产品
 	 * @param product
 	 * @return true 添加成功
+	 * @throws IOException 
+	 * @throws IllegalStateException 
 	 */
 	public boolean addProduct(Productinfo product){
 		boolean list = checkProname(product.getProname());
-		                                   
-		//不重名时
-		if(list) {
-			productinfoMapper.insert(product);
-			return true;
+		
+		       //不重名时
+		      if(list) {
+			      productinfoMapper.insert(product);
+			      return true;
 		}else {
 			return false;
 		}
@@ -120,15 +127,4 @@ public class ProductService {
 		
 		return list.size() == 0;
 	}
-	
-	
-//	public Productinfo dosearchproid(String proname) {
-//		
-//		ProductinfoExample example=new ProductinfoExample();
-//		Criteria cc=example.createCriteria();
-//		cc.andPronameEqualTo(proname);
-//		List<Productinfo>list=productinfoMapper.selectByExample(example);
-//		return list.get(0);
-//		
-//	}
 }

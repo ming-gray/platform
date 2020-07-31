@@ -68,118 +68,30 @@
         </div><!-- /.navbar-collapse -->
     </nav>
 
+    
+    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
     <div>
         <span style="font-size:20px;width: 40%;display: inline-block">设备运行情况</span>
     </div>
-    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+    <div class="t_left_box">
+        <div id="circle1" style="width: 300px;height:200px;"></div>
+    </div>
+    <div class="t_center_box">
+        <div id="circle2" style="width: 300px;height:200px;"></div>
+    </div>
+    <div class="t_right_box">
+        <div id="circle3" style="width: 300px;height:200px;"></div>
+    </div>
+    
     <div id="echarts3" style="width: 1000px;height:450px;"></div>
+    
     <div class="left_box">
         <div id="main" style="width: 600px;height:400px;"></div>
     </div>
     <div class="right_box">
         <div id="echarts2" style="width: 600px;height:400px;"></div>
     </div>
-    <script type="text/javascript">
-        // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('echarts3'));
-
-        // 指定图表的配置项和数据
-        var data = [{
-            name: '开机率',
-            value: 84
-        }, {
-            name: '故障率',
-            value: 24
-        }, {
-            name: '运行率',
-            value: 65
-        }, {
-            name: '综合效率',
-            value: 89
-        }]
-
-        var titleArr = [],
-            seriesArr = [];
-        colors = [
-            ['#389af4', '#dfeaff'],
-            ['#ff8c37', '#ffdcc3'],
-            ['#ffc257', '#ffedcc'],
-            ['#a181fc', '#e3d9fe']
-        ]
-        data.forEach(function(item, index) {
-            titleArr.push({
-                text: item.name,
-                left: index * 20 + 10 + '%',
-                top: '65%',
-                textAlign: 'center',
-                textStyle: {
-                    fontWeight: 'normal',
-                    fontSize: '16',
-                    color: colors[index][0],
-                    textAlign: 'center',
-                },
-            });
-            seriesArr.push({
-                name: item.name,
-                type: 'pie',
-                clockWise: false,
-                radius: [60, 70],
-                itemStyle: {
-                    normal: {
-                        color: colors[index][0],
-                        shadowColor: colors[index][0],
-                        shadowBlur: 0,
-                        label: {
-                            show: false
-                        },
-                        labelLine: {
-                            show: false
-                        },
-                    }
-                },
-                hoverAnimation: false,
-                center: [index * 20 + 10 + '%', '50%'],
-                data: [{
-                    value: item.value,
-                    label: {
-                        normal: {
-                            formatter: function(params) {
-                                return params.value + '%';
-                            },
-                            position: 'center',
-                            show: true,
-                            textStyle: {
-                                fontSize: '20',
-                                fontWeight: 'bold',
-                                color: colors[index][0]
-                            }
-                        }
-                    },
-                }, {
-                    value: 100 - item.value,
-                    name: 'invisible',
-                    itemStyle: {
-                        normal: {
-                            color: colors[index][1]
-                        },
-                        emphasis: {
-                            color: colors[index][1]
-                        }
-                    }
-                }]
-            })
-        });
-
-
-        option = {
-            backgroundColor: "#fff",
-            title: titleArr,
-            series: seriesArr
-        }
-
-
-        // 使用刚指定的配置项和数据显示图表。
-        myChart.setOption(option);
-    </script>
+    
+    
 
 </body></html>

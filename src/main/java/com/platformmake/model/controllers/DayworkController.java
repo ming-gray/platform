@@ -12,7 +12,7 @@ import com.platformmake.model.entity.DayWork;
 import com.platformmake.model.entity.Trackinfo;
 import com.platformmake.model.services.DayworkService;
 
-@RestController//该类下所有方法都添加	@ResponseBody
+@RestController//锟斤拷锟斤拷锟斤拷锟斤拷锟叫凤拷锟斤拷锟斤拷锟斤拷锟?	@ResponseBody
 public class DayworkController {
 	
 	@Autowired

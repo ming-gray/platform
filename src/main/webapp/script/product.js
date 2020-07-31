@@ -1,11 +1,10 @@
 //添加产品按钮绑定点击事件
-$(function(){
+/*$(function(){
 	$("#addBtn").click(function(){
-        
-        window.location.href = "/platform/addproduct.html";
-        
+		
+				window.location.href = "/platform/addproduct.html";
 	});
-});
+});*/
 
 //分页查询的功能实现
 $(function(){
@@ -36,10 +35,11 @@ $(function(){
 					var productinfo = data.list[i];
 					//创建一行，生成tr元素  tr代表行
 					var oTr = $("<tr></tr>");
+				//	var o = $("<img class="user-header" style="width: 100px;height: 100px;object-fit: cover;" src"productinfo.propic">");
 					// 生成单元格,写入数据，放到tr中
-					$("<td></td>").html(i+1).appendTo(oTr);
+					$("<td></td>").html(i+1+(data.pageNum*1-1)*data.pageSize).appendTo(oTr);
 					$("<td></td>").html(productinfo.proid).appendTo(oTr);
-					$("<td></td>").html(null).appendTo(oTr);
+					$("<td></td>").html(productinfo.propic).appendTo(oTr);
 					$("<td></td>").html(productinfo.proname).appendTo(oTr);
 					// 将te放入表格中
 					oTr.appendTo("#resulttable");
@@ -103,22 +103,14 @@ $(function(){
 								
 								$.post("/platform/modpro","proid="+proid+"&proname="+proname,function(data){
 									if(data == "true"){
-									//修改成功
-									//1.将用户名编程不可编辑状态
 										var oTd4=oBtn.parent().parent().find("td:eq(3)");
 										var oText4 =oTd4.find("input");
-										//获取用户输入的用户名
 										var proname=oText4.val();
-										//清空单元格
 										oTd4.empty();
-										//将新用户名填天会到单元格中
 										oTd4.html(proname);
-									//3.将当前按钮变成修改按钮
 										oBtn.val("修改");
-									//4.提示信息
 										alert("修改成功");
 									}else{
-										//修改失败
 										alert("修改失败");
 									}
 								},"text");
@@ -134,17 +126,20 @@ $(function(){
 				//上一页和下一页按钮的控制
 				   if(data.isFirstPage){
 					   // 当前是第一页
-					   $("#prePage").attr("disabled",true);
+					    $("#prePage").hide();
+	                    $("#prePageSpan").show();
 				   }else{
-					   $("#prePage").attr("disabled",false);
+					   $("#prePage").show();
+	                   $("#prePageSpan").hide();
 				   }
 				   
 				   if(data.isLastPage){
-					   $("#nextPage").attr("disabled",true);
+					    $("#nextPage").hide();
+	                    $("#nextPageSpan").show();
 				   }else{
-					   $("#nextPage").attr("disabled",false);
+					    $("#nextPage").show();
+	                    $("#nextPageSpan").hide();
 				   }
-				
 			}
 			else{
 				   $("#resultdiv").hide();
@@ -195,4 +190,27 @@ $(function(){
 			$("#pageNum").val(gopage);
 			$("#searchBtn").click();
 });
+});
+$(function(){
+	//对新增按钮创建点击事件
+	$("#add1Btn").click(function(){
+		//1.页面验证，验证是否填写产品名称
+	      //首先得到产品名称
+		  var proname = $("#proname1").val();
+		  if(!proname){
+			  alert("请填写产品名称");
+			  return;
+		  }
+		// 发送Ajax请求
+		$.post("/platform/addpro","proname="+proname,function(data){
+		  if(data == "true"){
+			  alert("添加新产品成功！");
+			  $("#add1Btn").unbind();
+			  window.location.href = "/platform/product.html";
+		  }else{
+			  alert("产品名称重复，请重新输入");
+		  }
+		},"text");
+		
+	});
 });

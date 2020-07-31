@@ -319,6 +319,10 @@ public class WorkinfoService {
 					System.out.println("设备更新了" + eq.getEqid());
 					break;
 				}
+				else {
+					System.out.println("间隔天数有问题");
+					return null;
+				}
 			}
 			else {
 				System.out.println("设备已启用或发生故障");

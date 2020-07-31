@@ -7,7 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Planinfo {
     public Planinfo() {
 		super();
-		// TODO ×Ô¶¯Éú³ÉµÄ¹¹Ôìº¯Êý´æ¸ù
+		// TODO ï¿½Ô¶ï¿½ï¿½ï¿½ï¿½ÉµÄ¹ï¿½ï¿½ìº¯ï¿½ï¿½ï¿½ï¿½ï¿½
 	}
 
 
@@ -67,6 +67,7 @@ public class Planinfo {
      *
      * @mbg.generated Sun Jul 26 23:40:19 CST 2020
      */
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date ddl;
 
     /**
@@ -76,7 +77,7 @@ public class Planinfo {
      *
      * @mbg.generated Sun Jul 26 23:40:19 CST 2020
      */
-    @DateTimeFormat(pattern="yyyy-MM-dd hh:mm:ss")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date plansttime;
 
     /**
@@ -86,7 +87,7 @@ public class Planinfo {
      *
      * @mbg.generated Sun Jul 26 23:40:19 CST 2020
      */
-    @DateTimeFormat(pattern="yyyy-MM-dd hh:mm:ss")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date planentime;
 
     /**

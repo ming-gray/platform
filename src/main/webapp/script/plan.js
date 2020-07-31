@@ -8,33 +8,46 @@ $(function(){
 //对计划编号下拉列表的操作
 $(document).ready(function(){
 	$.post("/platform/initplan",null,function(data){
-		 
 		if(data){
 			for(var i=0;i<data.length;i++){
 				var plan = data[i];
 				//动态生成页面元素
             	$("<option></option>").html(plan.planid).val(plan.planid).appendTo("#selplan");
-            	$("<option></option>").html(plan.ordid).val(plan.ordid).appendTo("#selordid");
-            	$("<option></option>").html(plan.proid).val(plan.proid).appendTo("#selproid");
             	$("<option></option>").html(plan.planstate).val(plan.planstate).appendTo("#selpstate");
 			}
 		}
 	},"json");
-	/*//2.给计划编号下拉列表绑定change事件
+	$.post("/platform/initorder",null,function(data){
+		if(data){
+			for(var i=0;i<data.length;i++){
+				var order = data[i];
+				//动态生成页面元素
+				$("<option></option>").html(order.ordid).val(order.ordid).appendTo("#selordid");
+			}
+		}
+	},"json");
+	$.post("/platform/initproduct",null,function(data){
+		if(data){
+			for(var i=0;i<data.length;i++){
+				var pro = data[i];
+				//动态生成页面元素
+				$("<option></option>").html(pro.proid).val(pro.proid).appendTo("#selproid");
+			}
+		}
+	},"json");
+	//2.给计划编号下拉列表绑定change事件
 	$("#selplan").change(function(){
-		//获取当前用户选择的选项的value(planid)
-		//select控件的value值，就是当前选中选项对象的value值
 		var planid = $(this).val();
-		$("#selcity option:gt(0)").remove();
+		$("#selordid option:gt(0)").remove();
 			$.post("/platform/getordid","planid="+planid,function(data){
 				if(data){
 					for(var i=0;i<data.length;i++){
 						var plan1 = data[i];
-						$("<option></option>").html(plan1.ordid).val(plan1.proid).appendTo("#selordid");
+						$("<option></option>").html(plan1.ordid).val(plan1.ordid).appendTo("#selordid");
 					}
 				}
 			},"json");
-	//		$("#selordid").attr("disabled",false);
+		$("#selproid option:gt(0)").remove();
 			$.post("/platform/getproid","planid="+planid,function(data){
 				if(data){
 					for(var i=0;i<data.length;i++){
@@ -43,9 +56,7 @@ $(document).ready(function(){
 					}
 				}
 			},"json");
-	//		$("#selproid").attr("disabled",false);
-	//	}
-	});*/
+	});
 
 });
 
@@ -80,7 +91,7 @@ $(function(){
 					//创建一行，生成tr元素  tr代表行
 					var oTr = $("<tr></tr>");
 					// 生成单元格,写入数据，放到tr中
-					$("<td></td>").html(i+1).appendTo(oTr);
+					$("<td></td>").html(i+1+(data.pageNum*1-1)*data.pageSize).appendTo(oTr);
 					$("<td></td>").html(planinfo.planid).appendTo(oTr);
 					$("<td></td>").html(planinfo.ordid).appendTo(oTr);
 					$("<td></td>").html(planinfo.proid).appendTo(oTr);
@@ -88,7 +99,10 @@ $(function(){
 				    $("<td></td>").html(new Date(planinfo.ddl).format("yyyy-MM-dd")).appendTo(oTr);
 					$("<td></td>").html(new Date(planinfo.plansttime).format("yyyy-MM-dd")).appendTo(oTr);
 					$("<td></td>").html(new Date(planinfo.planentime).format("yyyy-MM-dd")).appendTo(oTr);
-					$("<td></td>").html(planinfo.planstate).appendTo(oTr);
+				    if(planinfo.planstate*1 == 10) {$("<td></td>").html("未启动").appendTo(oTr);}
+				    else if(planinfo.planstate*1 == 20) {$("<td></td>").html("已启动").appendTo(oTr);}
+				    else if(planinfo.planstate*1 == 30) {$("<td></td>").html("已完成").appendTo(oTr);}
+					//$("<td></td>").html(planinfo.planstate).appendTo(oTr);
 					// 将te放入表格中
 					oTr.appendTo("#resulttable");
 					//动态生成删除按钮
@@ -100,8 +114,8 @@ $(function(){
 							if(isOK){
 								var planid=$(this).parent().parent().find("td:eq(1)").html();
 								//发ajax请求删除数据
-								$.post("/platform/delplan","planid="+planid,function(data){
-									if(data == "true"){
+								$.post("/platform/delplan","planid="+planid,function(data2){
+									if(data2 == "true"){
 										//删除成功
 										alert("删除成功");
 										$("#searchBtn").click();
@@ -113,108 +127,113 @@ $(function(){
 								
 							}
 						}).appendTo(oTd);
-						//生成修改按钮并添加到单元格中
-						$("<input type='button' value='修改'>").click(function(){
-							if($(this).val() == "修改"){
-							//如果当前用户点击的是修改，则用户点击的是修改功能
-							//1.将用户名变为可编辑状态
-								var oTd1 = $(this).parent().parent().find("td:eq(1)");
-								var planid = oTd1.html();
-								var  oTd2=$(this).parent().parent().find("td:eq(2)");
-								var ordid = oTd2.html();
-								var  oTd3=$(this).parent().parent().find("td:eq(3)");
-								var proid = oTd3.html();
-								//数量
-								var oTd4 =$(this).parent().parent().find("td:eq(4)");
-								var plancount =oTd4.html();
-								oTd4.empty();
-								$("<input type='text'>").css("width","50px").val(plancount).appendTo(oTd4);
-							    //交货日期
-								var oTd5 =$(this).parent().parent().find("td:eq(5)");
-								var ddl =oTd5.html();
-								oTd5.empty();
-								$("<input type='date'>").css("width","100px").val(ddl).appendTo(oTd5);
-								//计划开始日期
-								var oTd6 =$(this).parent().parent().find("td:eq(6)");
-								var plansttime =oTd6.html();
-								oTd6.empty();
-								$("<input type='date'>").css("width","100px").val(plansttime).appendTo(oTd6);
-								//计划结束日期
-								var oTd7 =$(this).parent().parent().find("td:eq(7)");
-								var planentime =oTd7.html();
-								oTd7.empty();
-								$("<input type='date'>").css("width","100px").val(plansttime).appendTo(oTd7);
-								var oTd8 =$(this).parent().parent().find("td:eq(8)");
-								var planentime =oTd8.html();
-							//3.将按钮变为确定状态
-								$(this).val("确定");	
-							}else if($(this).val() == "确定"){
-							//如果当前按钮上的文字是确定，则用户点击的是确定功能
-							//1.页面认证
-								var oText5 = $(this).parent().parent().find("td:eq(5) input");
-								var ddl = oText5.val();
-								if(!ddl){
-									alert("请填写交货日期");
-									oText5.focus();
-									return;
-								}
-							//2.发送ajax请求进行修改
-							 	var oText4 = $(this).parent().parent().find("td:eq(4) input");
-								var plancount = oText4.val();
-								var oText6 = $(this).parent().parent().find("td:eq(6) input");
-								var plansttime = oText6.val();
-								var oText7 = $(this).parent().parent().find("td:eq(7) input");
-								var planentime = oText7.val();
-								var planid = $(this).parent().parent().find("td:eq(1)").html();
-								var ordid =$(this).parent().parent().find("td:eq(2)").html();
-								var proid =$(this).parent().parent().find("td:eq(3)").html();
-							//	var plancount = $(this).parent().parent().find("td:eq(4)").html();
-						/*		var ddl =$(this).parent().parent().find("td:eq(5)").html();
-								var plansttime =$(this).parent().parent().find("td:eq(6)").html();
-								var planentime =$(this).parent().parent().find("td:eq(7)").html();*/
-								var planstate =$(this).parent().parent().find("td:eq(8)").html();
-								var oBtn = $(this);//+"&plansttime="+plansttime+"&planentime="+planentime+"&ddl="+ddl+
-								$.post("/platform/modplan","planid="+planid+"&plancount="+plancount+"&ddl="+ddl+"&plansttime="+plansttime+"&planentime="+planentime+"&planstate="+planstate,function(data){
-								//"planid="+planid+"&ordid="+ordid+"&proid="+proid+"&plancount="+plancount+"&planstate="+planstate"&ddl="+ddl+
-									if(data == "true"){
-									//修改成功
-										var oTd4=oBtn.parent().parent().find("td:eq(4)");
-										var oText4 =oTd4.find("input");
-										var plancount=oText4.val();
-										oTd4.empty();
-										oTd4.html(plancount);
-										var oTd5=oBtn.parent().parent().find("td:eq(5)");
-										var oText5 =oTd5.find("input");
-										var ddl=oText5.val();
-										oTd5.empty();
-										oTd5.html(ddl);
-										var oTd6=oBtn.parent().parent().find("td:eq(6)");
-										var oText6 =oTd6.find("input");
-										var plansttime=oText6.val();
-										oTd6.empty();
-										oTd6.html(plansttime);
-										var oTd7=oBtn.parent().parent().find("td:eq(7)");
-										var oText7 =oTd7.find("input");
-										var planentime=oText7.val();
-										oTd7.empty();
-										oTd7.html(planentime);
-								/*		var oTd8=oBtn.parent().parent().find("td:eq(8)");
-										var oText8 =oTd8.find("input");
-										var planstate=oText8.val();
-										oTd8.empty();
-										oTd8.html(planstate);*/
-									//3.将当前按钮变成修改按钮
-										oBtn.val("修改");
-									//4.提示信息
-										alert("修改成功");
-									}else{
-										//修改失败
-										alert("修改失败");
+	//////////////////////生成修改按钮并添加到单元格中
+		         if(planinfo.planstate==10){
+							$("<input type='button' value='修改'>").click(function(){
+         //////////////////////////////////修改
+								if($(this).val() == "修改"){
+								//1.将用户名变为可编辑状态
+									var oTd1 = $(this).parent().parent().find("td:eq(1)");
+									var planid = oTd1.html();
+									var  oTd2=$(this).parent().parent().find("td:eq(2)");
+									var ordid = oTd2.html();
+									var  oTd3=$(this).parent().parent().find("td:eq(3)");
+									var proid = oTd3.html();
+									//数量
+									var oTd4 =$(this).parent().parent().find("td:eq(4)");
+									var plancount =oTd4.html();
+									oTd4.empty();
+									$("<input type='text'>").css("width","50px").val(plancount).appendTo(oTd4);
+								    //交货日期
+									var oTd5 =$(this).parent().parent().find("td:eq(5)");
+									var ddl =oTd5.html();
+									oTd5.empty();
+									$("<input type='date'>").css("width","100px").val(ddl).appendTo(oTd5);
+									//计划开始日期
+									var oTd6 =$(this).parent().parent().find("td:eq(6)");
+									var plansttime =oTd6.html();
+									oTd6.empty();
+									$("<input type='date'>").css("width","100px").val(plansttime).appendTo(oTd6);
+									//计划结束日期
+									var oTd7 =$(this).parent().parent().find("td:eq(7)");
+									var planentime =oTd7.html();
+									oTd7.empty();
+									$("<input type='date'>").css("width","100px").val(plansttime).appendTo(oTd7);
+									var oTd8 =$(this).parent().parent().find("td:eq(8)");
+									var planentime =oTd8.html();
+	  ////////////////////////////////3.将按钮变为确定状态
+									$(this).val("确定");	
+									var oTd = $(this).parent();
+									$("<input type='button' value='取消修改'>").click(function(){
+										$("#searchBtn").click();
+									}).appendTo(oTd);
+								}else if($(this).val() == "确定"){
+								//1.页面认证
+									var oText5 = $(this).parent().parent().find("td:eq(5) input");
+									var ddl = oText5.val();
+									if(!ddl){
+										alert("请填写交货日期");
+										oText5.focus();
+										return;
 									}
-								},"text");
-							}
-						}).appendTo(oTd);
-						$("<input type='button' value='启动 ''>'").click(function(){
+								 	var oText4 = $(this).parent().parent().find("td:eq(4) input");
+									var plancount = oText4.val();
+									var oText6 = $(this).parent().parent().find("td:eq(6) input");
+									var plansttime = oText6.val();
+									var oText7 = $(this).parent().parent().find("td:eq(7) input");
+									var planentime = oText7.val();
+									var planid = $(this).parent().parent().find("td:eq(1)").html();
+									var ordid =$(this).parent().parent().find("td:eq(2)").html();
+									var proid =$(this).parent().parent().find("td:eq(3)").html();
+								    var planstate =$(this).parent().parent().find("td:eq(8)").html();
+							//////////状态和编号转化		
+									if(planstate == "未启动") var state=10;
+									else if	(planstate == "已启动") var state=20;
+									else if	(planstate == "已完成") var state=30;
+									var oBtn = $(this);
+									//2.发送ajax请求进行修改
+									//"planid="+planid+"&plancount="+plancount+"&ddl="+ddl+"&plansttime="+plansttime+"&planentime="+planentime+"&planstate="+planstate
+									$.post("/platform/modplan","planid="+planid+"&ordid="+ordid+"&proid="+proid+"&plancount="+plancount+"&ddl="+ddl+"&plansttime="+plansttime+"&planentime="+planentime+"&planstate="+state,function(data){
+									if(data == "true"){
+										//修改成功
+											var oTd4=oBtn.parent().parent().find("td:eq(4)");
+											var oText4 =oTd4.find("input");
+											var plancount=oText4.val();
+											oTd4.empty();
+											oTd4.html(plancount);
+											var oTd5=oBtn.parent().parent().find("td:eq(5)");
+											var oText5 =oTd5.find("input");
+											var ddl=oText5.val();
+											oTd5.empty();
+											oTd5.html(ddl);
+											var oTd6=oBtn.parent().parent().find("td:eq(6)");
+											var oText6 =oTd6.find("input");
+											var plansttime=oText6.val();
+											oTd6.empty();
+											oTd6.html(plansttime);
+											var oTd7=oBtn.parent().parent().find("td:eq(7)");
+											var oText7 =oTd7.find("input");
+											var planentime=oText7.val();
+											oTd7.empty();
+											oTd7.html(planentime);
+										//3.将当前按钮变成修改按钮
+											oBtn.val("修改");
+										//4.提示信息
+											alert("修改成功");
+											$("#searchBtn").click();
+										}else{
+											//修改失败
+											alert("修改失败");
+											$("#searchBtn").click();
+										}
+									},"text");
+								}
+							}).appendTo(oTd);	
+						}
+		         
+		 //////////////////////////////////////
+		                if(planinfo.planstate==10){
+		                	$("<input type='button' value='启动 ''>'").click(function(){
 								var planid=$(this).parent().parent().find("td:eq(1)").html();
 								//发ajax请求删除数据
 								$.post("/platform/startplan","planid="+planid,function(data){
@@ -229,6 +248,9 @@ $(function(){
 								},"text");
 							
 						}).appendTo(oTd);
+		                }
+		                
+						
 				}
 				
 				// 3.页面的控制
@@ -238,15 +260,19 @@ $(function(){
 				//上一页和下一页按钮的控制
 				   if(data.isFirstPage){
 					   // 当前是第一页
-					   $("#prePage").attr("disabled",true);
+					    $("#prePage").hide();
+	                    $("#prePageSpan").show();
 				   }else{
-					   $("#prePage").attr("disabled",false);
+					   $("#prePage").show();
+	                   $("#prePageSpan").hide();
 				   }
 				   
 				   if(data.isLastPage){
-					   $("#nextPage").attr("disabled",true);
+					    $("#nextPage").hide();
+	                    $("#nextPageSpan").show();
 				   }else{
-					   $("#nextPage").attr("disabled",false);
+					    $("#nextPage").show();
+	                    $("#nextPageSpan").hide();
 				   }
 				
 			}
